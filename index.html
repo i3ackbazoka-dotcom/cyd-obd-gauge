@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#05070a">
+<title>OBD/GAUGE · เกจวัดรถยนต์ผ่าน OBD</title>
+<meta name="description" content="เปลี่ยนจอ ESP32 CYD เป็นเกจวัดรถยนต์ อ่านค่าจาก ELM327 ติดตั้งฟรีผ่านเบราว์เซอร์">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,600;0,700;1,700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+<style>
+:root{--bg:#05070a;--panel:#0e1319;--panel2:#151a21;--line:#1f2730;--text:#e9edf1;--muted:#8a95a0;--sub:#b9c4cd;--cyan:#3bc9f0;--amber:#ffb224;--red:#ff5a4e;--ok:#7ce38b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 "IBM Plex Sans Thai",system-ui,sans-serif;
+  background-image:radial-gradient(1000px 480px at 50% -160px,rgba(59,201,240,.14),transparent 70%)}
+a{color:var(--cyan)}
+.wrap{max-width:920px;margin:0 auto;padding:0 18px}
+header{display:flex;align-items:center;gap:12px;padding:22px 0}
+.word{font:italic 700 24px/1 "Chakra Petch",sans-serif;letter-spacing:.5px}.word b{color:var(--cyan)}
+header nav{margin-left:auto;display:flex;gap:18px;font-size:14px}header nav a{color:var(--sub);text-decoration:none}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;padding:28px 0 46px}
+h1{font:700 40px/1.2 "Chakra Petch","IBM Plex Sans Thai",sans-serif;margin:0 0 14px}
+h1 em{font-style:normal;color:var(--cyan)}
+.lead{color:var(--sub);font-size:18px;margin:0 0 24px}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 16px "IBM Plex Sans Thai";padding:13px 20px;border-radius:12px;text-decoration:none;border:0;cursor:pointer}
+.btn.cyan{background:var(--cyan);color:#04131a}.btn.amber{background:linear-gradient(180deg,#ffc24d,#ffa514);color:#1a1100}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.screen{border-radius:14px;border:8px solid #1a1f26;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 0 1px #2a333d;width:100%;image-rendering:auto;display:block}
+.hero .screen{max-width:420px;margin-left:auto}
+section{padding:46px 0;border-top:1px solid var(--line)}
+h2{font:700 26px/1.3 "Chakra Petch","IBM Plex Sans Thai",sans-serif;margin:0 0 6px}
+.sec-sub{color:var(--muted);margin:0 0 24px}
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.plan{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
+.plan.pro{border-color:rgba(255,178,36,.45);box-shadow:0 0 0 1px rgba(255,178,36,.15),0 14px 40px rgba(255,178,36,.06)}
+.plan h3{margin:0 0 4px;font:700 22px "Chakra Petch";display:flex;align-items:center;gap:10px}
+.tag{font:700 11px/1 "Chakra Petch";letter-spacing:1.5px;color:var(--bg);background:var(--amber);padding:5px 8px;border-radius:6px}
+.price{color:var(--muted);font-size:14px;margin-bottom:14px}
+.plan ul{list-style:none;padding:0;margin:0}
+.plan li{padding:6px 0 6px 26px;position:relative;color:var(--sub)}
+.plan li:before{content:"✓";position:absolute;left:2px;color:var(--cyan);font-weight:700}
+.plan.pro li:before{color:var(--amber)}
+.plan li b{color:var(--text);font-weight:600}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.gallery figure{margin:0}.gallery figcaption{font-size:13px;color:var(--muted);margin-top:8px;text-align:center}
+.gallery .screen{border-width:5px;border-radius:10px}
+.steps{counter-reset:s;display:grid;gap:12px}
+.step{display:flex;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+.step:before{counter-increment:s;content:counter(s);flex:none;width:30px;height:30px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);
+  display:grid;place-items:center;font:700 14px "Chakra Petch";color:var(--cyan)}
+.step b{display:block}.step span{color:var(--sub);font-size:15px}
+.install{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;margin-top:18px;text-align:center}
+.install .note{color:var(--muted);font-size:14px;margin-top:12px}
+esp-web-install-button:not(:defined) [slot="unsupported"],esp-web-install-button:not(:defined) [slot="not-allowed"]{display:none}
+esp-web-install-button [slot="unsupported"],esp-web-install-button [slot="not-allowed"]{color:var(--amber)}
+.need{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:6px}
+.need div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;font-size:15px;color:var(--sub)}
+.need b{display:block;color:var(--text)}
+.warn{color:var(--amber)}
+.buy{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;background:linear-gradient(135deg,rgba(255,178,36,.10),rgba(59,201,240,.06));
+  border:1px solid rgba(255,178,36,.35);border-radius:20px;padding:26px}
+.buy img{width:170px;border-radius:12px;background:#fff;padding:8px;display:block}
+footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra Petch";letter-spacing:2px}
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr}.hero .screen{margin:0 auto}h1{font-size:31px}
+  .plans,.need{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr}
+  .buy{grid-template-columns:1fr;text-align:center}.buy img{margin:0 auto}header nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <svg width="40" height="26" viewBox="0 0 96 56" aria-hidden="true">
+    <polygon fill="#3bc9f0" points="4,56 16,56 20,40 8,40"/><polygon fill="#3bc9f0" points="20,56 32,56 38.5,30 26.5,30"/>
+    <polygon fill="#3bc9f0" points="36,56 48,56 57,20 45,20"/><polygon fill="#ffb224" points="52,56 64,56 75.5,10 63.5,10"/>
+    <polygon fill="#ff5a4e" points="68,56 80,56 94,0 82,0"/></svg>
+  <div class="word">OBD<b>/</b>GAUGE</div>
+  <nav><a href="#plans">ฟรี / PRO</a><a href="#install">ติดตั้ง</a><a href="#buy">ซื้อ PRO</a></nav>
+</header>
+
+<div class="hero">
+  <div>
+    <h1>เปลี่ยนจอ CYD<br>เป็น<em>เกจวัดรถยนต์</em></h1>
+    <p class="lead">อ่านรอบเครื่อง ความเร็ว อุณหภูมิน้ำ แรงดันไฟ และค่าอื่นๆ จากช่อง OBD ผ่าน ELM327 Bluetooth แสดงบนจอสัมผัสสีขนาด 2.8 นิ้ว พร้อมเตือนเมื่อค่าผิดปกติ</p>
+    <div class="btns">
+      <a class="btn cyan" href="#install">ติดตั้งรุ่นฟรี</a>
+      <a class="btn ghost" href="#plans">ดูความต่าง ฟรี / PRO</a>
+    </div>
+  </div>
+  <img class="screen" src="img/free-main.png" alt="หน้าจอหลักของ OBD/GAUGE" width="320" height="240">
+</div>
+
+<section id="plans">
+  <h2>ใช้ฟรีได้เลย อยากได้ครบค่อยอัปเกรด</h2>
+  <p class="sec-sub">ซื้อ PRO ครั้งเดียว ใช้ได้ตลอด · อัปเกรดผ่าน Wi‑Fi ไม่ต้องต่อสาย</p>
+  <div class="plans">
+    <div class="plan">
+      <h3>ฟรี</h3><div class="price">ติดตั้งเองจากหน้านี้</div>
+      <ul>
+        <li><b>หน้าปัดรอบ + ความเร็ว</b> แบบคลาสสิก</li>
+        <li>ค่าพื้นฐาน 10 อย่าง: น้ำ, ไฟ, ภาระ, คันเร่ง, อากาศ, MAP, น้ำมันเครื่อง, จุดระเบิด, MAF, น้ำมัน</li>
+        <li>เตือนน้ำร้อน · ไฟอ่อน · รอบสูง</li>
+        <li>อ่านรหัสปัญหา (DTC)</li>
+        <li>หรี่จออัตโนมัติ · โหมดกลางคืน</li>
+        <li>อัปเดตออนไลน์ผ่าน Wi‑Fi</li>
+      </ul>
+    </div>
+    <div class="plan pro">
+      <h3>PRO <span class="tag">PRO</span></h3><div class="price">ทุกอย่างในรุ่นฟรี และ…</div>
+      <ul>
+        <li><b>หน้า 4 เกจ</b> และ<b>กราฟ</b>ย้อนหลัง</li>
+        <li>หน้าปัดเพิ่ม 3 แบบ: <b>LED · เรือง · สปอร์ต</b> (มีเข็มค้างค่าสูงสุด)</li>
+        <li><b>ค่าครบ 43 อย่าง</b> ที่รถรองรับ</li>
+        <li><b>ล้างรหัสปัญหา</b> (ดับไฟเช็คเอนจิน)</li>
+        <li><b>โหมด HUD</b> สะท้อนกระจกหน้ารถ</li>
+        <li>ดักฟัง CAN · ฟังก์ชันใหม่ในอนาคต</li>
+      </ul>
+    </div>
+  </div>
+  <div class="gallery" style="margin-top:22px">
+    <figure><img class="screen" src="img/pro-quad.png" alt="หน้า 4 เกจ" loading="lazy"><figcaption>4 เกจ · PRO</figcaption></figure>
+    <figure><img class="screen" src="img/pro-sport.png" alt="หน้าปัดสปอร์ต" loading="lazy"><figcaption>หน้าปัดสปอร์ต · PRO</figcaption></figure>
+    <figure><img class="screen" src="img/pro-graph.png" alt="กราฟ" loading="lazy"><figcaption>กราฟ · PRO</figcaption></figure>
+  </div>
+</section>
+
+<section id="install">
+  <h2>ติดตั้งรุ่นฟรีผ่านเบราว์เซอร์</h2>
+  <p class="sec-sub">ไม่ต้องลงโปรแกรม ใช้เวลาประมาณ 2 นาที</p>
+  <div class="need">
+    <div><b>บอร์ด ESP32‑2432S028R</b>หรือที่เรียกว่า "CYD" จอ 2.8" สีเหลือง</div>
+    <div><b>สาย USB ที่ส่งข้อมูลได้</b>สายชาร์จอย่างเดียวจะมองไม่เห็นบอร์ด</div>
+    <div><b>Chrome หรือ Edge บนคอม</b>Windows / Mac / Linux (มือถือใช้ไม่ได้)</div>
+  </div>
+  <div class="install">
+    <esp-web-install-button manifest="flash.json">
+      <button slot="activate" class="btn cyan">⚡ เชื่อมต่อบอร์ดและติดตั้ง</button>
+      <span slot="unsupported">เบราว์เซอร์นี้ติดตั้งไม่ได้ · ใช้ Chrome หรือ Edge บนคอมพิวเตอร์</span>
+      <span slot="not-allowed">ต้องเปิดหน้านี้ผ่าน https</span>
+    </esp-web-install-button>
+    <div class="note">กดแล้วเลือกพอร์ตของบอร์ด (เช่น "USB Serial" / "CH340") → ติ๊ก <b>Erase device</b> → Install<br>
+      <span class="warn">ถ้าไม่เจอพอร์ต:</span> ลองสายเส้นอื่น หรือติดตั้งไดรเวอร์ CH340</div>
+  </div>
+  <div class="steps" style="margin-top:18px">
+    <div class="step"><div><b>ปรับทัชครั้งแรก</b><span>เปิดเครื่องแล้วแตะเป้า 4 มุมตามจอ</span></div></div>
+    <div class="step"><div><b>จับคู่ ELM327</b><span>ตั้งค่า → การเชื่อมต่อ → ค้นหา → แตะชื่อ OBDII / ELM327</span></div></div>
+    <div class="step"><div><b>เสียบ ELM327 ที่ช่อง OBD ใต้คอนโซล แล้วบิดกุญแจ</b><span>เกจจะเชื่อมต่อและแสดงค่าเอง ยังไม่มีรถ? กด "ข้าม" ที่หน้าแรกเพื่อดูโหมดเดโม</span></div></div>
+  </div>
+</section>
+
+<section id="buy">
+  <div class="buy">
+    <div>
+      <h2>อัปเกรดเป็น PRO</h2>
+      <p class="sec-sub" style="margin-bottom:14px">จ่ายครั้งเดียว ใช้ได้ตลอดกับเครื่องนั้น</p>
+      <div class="steps">
+        <div class="step"><div><b>เปิด ตั้งค่า → ปลดล็อก PRO บนเกจ</b><span>จะเห็นรหัสเครื่อง 12 ตัว</span></div></div>
+        <div class="step"><div><b>แอด LINE <a href="https://line.me/R/ti/p/@675hflqu">@675hflqu</a> ส่งรหัสเครื่อง + โอนเงิน</b><span>ร้านยืนยันให้ภายในวัน</span></div></div>
+        <div class="step"><div><b>ตั้งค่า → เกี่ยวกับ → อัปเดต</b><span>ต่อ Wi‑Fi กด "ติดตั้งรุ่น PRO" รอ 2 นาที เสร็จ</span></div></div>
+      </div>
+      <div class="btns" style="margin-top:16px"><a class="btn amber" href="https://line.me/R/ti/p/@675hflqu">แอด LINE ร้าน</a></div>
+    </div>
+    <img src="img/line-qr.png" alt="QR LINE @675hflqu" width="170" height="170">
+  </div>
+</section>
+
+<footer>DESIGN BY WATCHAR</footer>
+</div>
+</body>
+</html>
