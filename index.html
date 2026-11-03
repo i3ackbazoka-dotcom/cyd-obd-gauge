@@ -1,25 +1,30 @@
 <!doctype html>
-<html lang="th">
+<html lang="th" data-lang="th">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#05070a">
-<title>OBD/GAUGE · เกจวัดรถยนต์ผ่าน OBD</title>
-<meta name="description" content="เปลี่ยนจอ ESP32 CYD เป็นเกจวัดรถยนต์ อ่านค่าจาก ELM327 ติดตั้งฟรีผ่านเบราว์เซอร์">
+<title>OBD/GAUGE · เกจวัดรถยนต์ผ่าน OBD / OBD car gauge</title>
+<meta name="description" content="เปลี่ยนจอ ESP32 CYD เป็นเกจวัดรถยนต์ อ่านค่าจาก ELM327 Bluetooth ติดตั้งฟรีผ่านเบราว์เซอร์ · Turn an ESP32 CYD into an OBD-II car gauge with a Bluetooth ELM327 — free browser install.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,600;0,700;1,700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
 <style>
 :root{--bg:#05070a;--panel:#0e1319;--panel2:#151a21;--line:#1f2730;--text:#e9edf1;--muted:#8a95a0;--sub:#b9c4cd;--cyan:#3bc9f0;--amber:#ffb224;--red:#ff5a4e;--ok:#7ce38b}
 *{box-sizing:border-box}
+html[data-lang="th"] [data-l="en"],html[data-lang="en"] [data-l="th"]{display:none!important}
 body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 "IBM Plex Sans Thai",system-ui,sans-serif;
   background-image:radial-gradient(1000px 480px at 50% -160px,rgba(59,201,240,.14),transparent 70%)}
 a{color:var(--cyan)}
-.wrap{max-width:920px;margin:0 auto;padding:0 18px}
-header{display:flex;align-items:center;gap:12px;padding:22px 0}
+.wrap{max-width:980px;margin:0 auto;padding:0 18px}
+header{display:flex;align-items:center;gap:12px;padding:20px 0;position:relative}
 .word{font:italic 700 24px/1 "Chakra Petch",sans-serif;letter-spacing:.5px}.word b{color:var(--cyan)}
 header nav{margin-left:auto;display:flex;gap:18px;font-size:14px}header nav a{color:var(--sub);text-decoration:none}
-.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;padding:28px 0 46px}
+header nav a:hover{color:var(--text)}
+.langsw{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-left:14px;flex:none}
+.langsw button{font:600 13px "Chakra Petch",sans-serif;letter-spacing:1px;padding:7px 11px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.langsw button.on{background:var(--cyan);color:#04131a}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center;padding:24px 0 40px}
 h1{font:700 40px/1.2 "Chakra Petch","IBM Plex Sans Thai",sans-serif;margin:0 0 14px}
 h1 em{font-style:normal;color:var(--cyan)}
 .lead{color:var(--sub);font-size:18px;margin:0 0 24px}
@@ -27,46 +32,59 @@ h1 em{font-style:normal;color:var(--cyan)}
 .btn{display:inline-flex;align-items:center;gap:8px;font:600 16px "IBM Plex Sans Thai";padding:13px 20px;border-radius:12px;text-decoration:none;border:0;cursor:pointer}
 .btn.cyan{background:var(--cyan);color:#04131a}.btn.amber{background:linear-gradient(180deg,#ffc24d,#ffa514);color:#1a1100}
 .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
-.screen{border-radius:14px;border:8px solid #1a1f26;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 0 1px #2a333d;width:100%;image-rendering:auto;display:block}
-.hero .screen{max-width:420px;margin-left:auto}
+.screen{border-radius:14px;border:8px solid #1a1f26;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 0 1px #2a333d;width:100%;height:auto;display:block;aspect-ratio:4/3;background:#000}
+.hero .screen{max-width:400px;margin-left:auto;border-width:6px;border-radius:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{font-size:13px;color:var(--sub);background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:5px 12px}
 section{padding:46px 0;border-top:1px solid var(--line)}
 h2{font:700 26px/1.3 "Chakra Petch","IBM Plex Sans Thai",sans-serif;margin:0 0 6px}
 .sec-sub{color:var(--muted);margin:0 0 24px}
-.plans{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.plan{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
-.plan.pro{border-color:rgba(255,178,36,.45);box-shadow:0 0 0 1px rgba(255,178,36,.15),0 14px 40px rgba(255,178,36,.06)}
-.plan h3{margin:0 0 4px;font:700 22px "Chakra Petch";display:flex;align-items:center;gap:10px}
-.tag{font:700 11px/1 "Chakra Petch";letter-spacing:1.5px;color:var(--bg);background:var(--amber);padding:5px 8px;border-radius:6px}
-.price{color:var(--muted);font-size:14px;margin-bottom:14px}
-.plan ul{list-style:none;padding:0;margin:0}
-.plan li{padding:6px 0 6px 26px;position:relative;color:var(--sub)}
-.plan li:before{content:"✓";position:absolute;left:2px;color:var(--cyan);font-weight:700}
-.plan.pro li:before{color:var(--amber)}
-.plan li b{color:var(--text);font-weight:600}
-.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.gallery figure{margin:0}.gallery figcaption{font-size:13px;color:var(--muted);margin-top:8px;text-align:center}
-.gallery .screen{border-width:5px;border-radius:10px}
+.tag{display:inline-block;font:700 10px/1 "Chakra Petch";letter-spacing:1.2px;color:var(--bg);background:var(--amber);padding:4px 6px;border-radius:5px;vertical-align:2px;margin-left:4px}
+.feat{display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:start;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px}
+.feat .screen{border-width:5px;border-radius:10px}
+.feat h3{margin:2px 0 8px;font:700 19px "Chakra Petch","IBM Plex Sans Thai",sans-serif}
+.feat ul{margin:0;padding:0;list-style:none}
+.feat li{padding:4px 0 4px 22px;position:relative;color:var(--sub);font-size:15px}
+.feat li:before{content:"›";position:absolute;left:4px;color:var(--cyan);font-weight:700}
+.feat li b{color:var(--text);font-weight:600}
+.thumbs{display:flex;gap:8px;margin-top:10px}
+.thumbs img{width:calc(33.3% - 6px);border-radius:6px;border:1px solid var(--line);cursor:pointer}
+.plans{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;font-size:15px}
+.plans th,.plans td{padding:10px 14px;border-top:1px solid var(--line);text-align:left}
+.plans thead th{border-top:0;font:700 16px "Chakra Petch","IBM Plex Sans Thai";background:var(--panel2)}
+.plans td.c,.plans th.c{text-align:center;width:90px}
+.plans .y{color:var(--cyan);font-weight:700}.plans .p{color:var(--amber);font-weight:700}.plans .n{color:#4a545e}
+.plans tr.grp td{background:#0a0e13;color:var(--muted);font-size:13px;letter-spacing:.5px}
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gallery figure{margin:0}.gallery figcaption{font-size:13px;color:var(--muted);margin-top:6px;text-align:center}
+.gallery .screen{border-width:4px;border-radius:9px}
 .steps{counter-reset:s;display:grid;gap:12px}
 .step{display:flex;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
 .step:before{counter-increment:s;content:counter(s);flex:none;width:30px;height:30px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);
   display:grid;place-items:center;font:700 14px "Chakra Petch";color:var(--cyan)}
 .step b{display:block}.step span{color:var(--sub);font-size:15px}
+.need{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:6px}
+.need div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;font-size:14px;color:var(--sub)}
+.need b{display:block;color:var(--text);font-size:15px}
 .install{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;margin-top:18px;text-align:center}
 .install .note{color:var(--muted);font-size:14px;margin-top:12px}
 esp-web-install-button:not(:defined) [slot="unsupported"],esp-web-install-button:not(:defined) [slot="not-allowed"]{display:none}
 esp-web-install-button [slot="unsupported"],esp-web-install-button [slot="not-allowed"]{color:var(--amber)}
-.need{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:6px}
-.need div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;font-size:15px;color:var(--sub)}
-.need b{display:block;color:var(--text)}
 .warn{color:var(--amber)}
 .buy{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;background:linear-gradient(135deg,rgba(255,178,36,.10),rgba(59,201,240,.06));
   border:1px solid rgba(255,178,36,.35);border-radius:20px;padding:26px}
 .buy img{width:170px;border-radius:12px;background:#fff;padding:8px;display:block}
+.faq details{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px}
+.faq summary{cursor:pointer;font-weight:600}
+.faq p{color:var(--sub);margin:10px 0 2px;font-size:15px}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;place-items:center;z-index:9;padding:16px}
+.lightbox.on{display:grid}.lightbox img{max-width:min(960px,100%);border-radius:12px;image-rendering:pixelated}
 footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra Petch";letter-spacing:2px}
-@media (max-width:760px){
-  .hero{grid-template-columns:1fr}.hero .screen{margin:0 auto}h1{font-size:31px}
-  .plans,.need{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr}
-  .buy{grid-template-columns:1fr;text-align:center}.buy img{margin:0 auto}header nav{display:none}}
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr}.hero .screen{margin:0 auto;max-width:340px}h1{font-size:31px}
+  .feat{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr}.need{grid-template-columns:1fr 1fr}
+  .buy{grid-template-columns:1fr;text-align:center}.buy img{margin:0 auto}header nav{display:none}.langsw{margin-left:auto}}
+@media (max-width:420px){.need{grid-template-columns:1fr}.plans td.c,.plans th.c{width:56px;padding:10px 6px}}
 </style>
 </head>
 <body>
@@ -77,96 +95,313 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
     <polygon fill="#3bc9f0" points="36,56 48,56 57,20 45,20"/><polygon fill="#ffb224" points="52,56 64,56 75.5,10 63.5,10"/>
     <polygon fill="#ff5a4e" points="68,56 80,56 94,0 82,0"/></svg>
   <div class="word">OBD<b>/</b>GAUGE</div>
-  <nav><a href="#plans">ฟรี / PRO</a><a href="#install">ติดตั้ง</a><a href="#buy">ซื้อ PRO</a></nav>
+  <nav>
+    <a href="#features"><span data-l="th">ฟังก์ชัน</span><span data-l="en">Features</span></a>
+    <a href="#plans"><span data-l="th">ฟรี / PRO</span><span data-l="en">Free / PRO</span></a>
+    <a href="#install"><span data-l="th">ติดตั้ง</span><span data-l="en">Install</span></a>
+    <a href="#buy"><span data-l="th">ซื้อ PRO</span><span data-l="en">Buy PRO</span></a>
+  </nav>
+  <div class="langsw" role="group" aria-label="Language">
+    <button type="button" data-set="th">TH</button><button type="button" data-set="en">EN</button>
+  </div>
 </header>
 
 <div class="hero">
   <div>
-    <h1>เปลี่ยนจอ CYD<br>เป็น<em>เกจวัดรถยนต์</em></h1>
-    <p class="lead">อ่านรอบเครื่อง ความเร็ว อุณหภูมิน้ำ แรงดันไฟ และค่าอื่นๆ จากช่อง OBD ผ่าน ELM327 Bluetooth แสดงบนจอสัมผัสสีขนาด 2.8 นิ้ว พร้อมเตือนเมื่อค่าผิดปกติ</p>
+    <h1 data-l="th">เปลี่ยนจอ CYD<br>เป็น<em>เกจวัดรถยนต์</em></h1>
+    <h1 data-l="en">Turn a CYD screen<br>into a <em>car gauge</em></h1>
+    <p class="lead" data-l="th">อ่านรอบเครื่อง ความเร็ว อุณหภูมิน้ำ แรงดันไฟ และค่าอื่นๆ อีกกว่า 40 อย่างจากช่อง OBD ผ่าน ELM327 Bluetooth บนจอสัมผัสสี 2.8 นิ้ว พร้อมเตือนเมื่อค่าผิดปกติ อัปเดตเองผ่าน Wi‑Fi</p>
+    <p class="lead" data-l="en">RPM, speed, coolant, voltage and 40+ other values from your car's OBD port through a Bluetooth ELM327 — on a 2.8" colour touch screen, with warnings when something is off and updates over Wi‑Fi.</p>
     <div class="btns">
-      <a class="btn cyan" href="#install">ติดตั้งรุ่นฟรี</a>
-      <a class="btn ghost" href="#plans">ดูความต่าง ฟรี / PRO</a>
+      <a class="btn cyan" href="#install"><span data-l="th">ติดตั้งรุ่นฟรี</span><span data-l="en">Install the free edition</span></a>
+      <a class="btn ghost" href="#features"><span data-l="th">ดูฟังก์ชันทั้งหมด</span><span data-l="en">All features</span></a>
+    </div>
+    <div class="chips">
+      <span class="chip">ELM327 Bluetooth</span>
+      <span class="chip" data-l="th">ไทย / English</span><span class="chip" data-l="en">Thai / English</span>
+      <span class="chip" data-l="th">อัปเดตผ่าน Wi‑Fi</span><span class="chip" data-l="en">Wi‑Fi updates</span>
+      <span class="chip" data-l="th">ติดตั้งผ่านเว็บ</span><span class="chip" data-l="en">Browser install</span>
     </div>
   </div>
-  <img class="screen" src="img/free-main.png" alt="หน้าจอหลักของ OBD/GAUGE" width="320" height="240">
+  <img class="screen" data-shot="main" alt="OBD/GAUGE" width="640" height="480">
 </div>
 
-<section id="plans">
-  <h2>ใช้ฟรีได้เลย อยากได้ครบค่อยอัปเกรด</h2>
-  <p class="sec-sub">ซื้อ PRO ครั้งเดียว ใช้ได้ตลอด · อัปเกรดผ่าน Wi‑Fi ไม่ต้องต่อสาย</p>
-  <div class="plans">
-    <div class="plan">
-      <h3>ฟรี</h3><div class="price">ติดตั้งเองจากหน้านี้</div>
-      <ul>
-        <li><b>หน้าปัดรอบ + ความเร็ว</b> แบบคลาสสิก</li>
-        <li>ค่าพื้นฐาน 10 อย่าง: น้ำ, ไฟ, ภาระ, คันเร่ง, อากาศ, MAP, น้ำมันเครื่อง, จุดระเบิด, MAF, น้ำมัน</li>
-        <li>เตือนน้ำร้อน · ไฟอ่อน · รอบสูง</li>
-        <li>อ่านรหัสปัญหา (DTC)</li>
-        <li>หรี่จออัตโนมัติ · โหมดกลางคืน</li>
-        <li>อัปเดตออนไลน์ผ่าน Wi‑Fi</li>
+<section id="features">
+  <h2 data-l="th">ฟังก์ชันทั้งหมด</h2><h2 data-l="en">Everything it does</h2>
+  <p class="sec-sub" data-l="th">ป้าย <span class="tag">PRO</span> = มีในรุ่น PRO · ที่เหลือใช้ได้ในรุ่นฟรี · แตะรูปเพื่อดูใหญ่</p>
+  <p class="sec-sub" data-l="en"><span class="tag">PRO</span> = PRO edition · everything else is in the free edition · tap a picture to enlarge</p>
+
+  <div class="feat">
+    <div><img class="screen" data-shot="main" alt="" loading="lazy">
+      <div class="thumbs"><img data-shot="quad" alt="" loading="lazy"><img data-shot="sport" alt="" loading="lazy"><img data-shot="graph" alt="" loading="lazy"></div></div>
+    <div>
+      <h3 data-l="th">หน้าเกจ</h3><h3 data-l="en">Gauge screens</h3>
+      <ul data-l="th">
+        <li><b>หน้าปัดรอบ + ความเร็ว</b> ขีดแดงตามรอบเตือนที่ตั้งไว้ พร้อมกรอบค่า 3 ช่อง มีไอคอนและแถบระดับ</li>
+        <li><b>กดค้าง 5 วินาที</b> ที่กรอบไหนก็ได้เพื่อเปลี่ยนค่า (ค่าจะไม่ซ้ำกันในหน้าเดียว)</li>
+        <li>หน้าปัดเพิ่ม 3 แบบ: <b>LED · เรือง · สปอร์ต</b> (สปอร์ตมีขีดค้างรอบสูงสุด แล้วค่อยๆ ลง) <span class="tag">PRO</span></li>
+        <li><b>หน้า 4 เกจ</b> ตัวเลขใหญ่ เลือกค่าเองได้ทุกช่อง <span class="tag">PRO</span></li>
+        <li><b>กราฟย้อนหลัง 60 วินาที</b> แสดงค่าต่ำสุด/สูงสุด และเส้นค่าเตือน <span class="tag">PRO</span></li>
+        <li><b>โหมด HUD</b> วางใต้กระจกหน้ารถ ภาพกลับด้านให้อ่านเงาได้ (ซ้าย‑ขวา / บน‑ล่าง / ทั้งสองแบบ) <span class="tag">PRO</span></li>
       </ul>
-    </div>
-    <div class="plan pro">
-      <h3>PRO <span class="tag">PRO</span></h3><div class="price">ทุกอย่างในรุ่นฟรี และ…</div>
-      <ul>
-        <li><b>หน้า 4 เกจ</b> และ<b>กราฟ</b>ย้อนหลัง</li>
-        <li>หน้าปัดเพิ่ม 3 แบบ: <b>LED · เรือง · สปอร์ต</b> (มีเข็มค้างค่าสูงสุด)</li>
-        <li><b>ค่าครบ 43 อย่าง</b> ที่รถรองรับ</li>
-        <li><b>ล้างรหัสปัญหา</b> (ดับไฟเช็คเอนจิน)</li>
-        <li><b>โหมด HUD</b> สะท้อนกระจกหน้ารถ</li>
-        <li>ดักฟัง CAN · ฟังก์ชันใหม่ในอนาคต</li>
+      <ul data-l="en">
+        <li><b>Tachometer + speed</b> with the redline at your RPM alert, plus 3 value tiles with icons and level bars</li>
+        <li><b>Hold any tile 5 s</b> to change its value (no duplicates on one page)</li>
+        <li>3 extra dial styles: <b>LED · Glow · Sport</b> (Sport has a peak marker that holds, then eases down) <span class="tag">PRO</span></li>
+        <li><b>Quad page</b> — 4 big gauges, each one your choice <span class="tag">PRO</span></li>
+        <li><b>60-second graph</b> with min / max and the alert line <span class="tag">PRO</span></li>
+        <li><b>HUD mode</b> — lay it under the windscreen, mirrored so the reflection reads right (left‑right / up‑down / both) <span class="tag">PRO</span></li>
       </ul>
     </div>
   </div>
-  <div class="gallery" style="margin-top:22px">
-    <figure><img class="screen" src="img/pro-quad.png" alt="หน้า 4 เกจ" loading="lazy"><figcaption>4 เกจ · PRO</figcaption></figure>
-    <figure><img class="screen" src="img/pro-sport.png" alt="หน้าปัดสปอร์ต" loading="lazy"><figcaption>หน้าปัดสปอร์ต · PRO</figcaption></figure>
-    <figure><img class="screen" src="img/pro-graph.png" alt="กราฟ" loading="lazy"><figcaption>กราฟ · PRO</figcaption></figure>
+
+  <div class="feat">
+    <div><img class="screen" data-shot="pick" alt="" loading="lazy">
+      <div class="thumbs"><img data-shot="pids" alt="" loading="lazy"><img data-shot="connect" alt="" loading="lazy"><img data-shot="boot" alt="" loading="lazy"></div></div>
+    <div>
+      <h3 data-l="th">ค่าจากรถและการเชื่อมต่อ</h3><h3 data-l="en">Car data &amp; connection</h3>
+      <ul data-l="th">
+        <li><b>สแกนอัตโนมัติ</b>ตอนเชื่อมต่อ ว่ารถคันนั้นให้ค่าอะไรได้บ้าง แล้วแสดงเฉพาะค่าที่มีจริง</li>
+        <li>รุ่นฟรี: รอบ, ความเร็ว + ค่าพื้นฐาน 10 อย่าง (น้ำ, ไฟ, ภาระ, คันเร่ง, อากาศไอดี, MAP, น้ำมันเครื่อง, จุดระเบิด, MAF, น้ำมัน)</li>
+        <li><b>ค่าครบ 43 อย่าง</b> เช่น fuel trim, O2, AFR, แคต, แรงดันราง, แรงบิด, อัตราใช้น้ำมัน <span class="tag">PRO</span></li>
+        <li>หน้า<b>เปิด/ปิดค่าที่ใช้</b> และรายชื่อ <b>PID ที่รถรองรับ</b>ทั้งหมด (01–A0)</li>
+        <li><b>ค้นหา ELM327 ผ่าน Bluetooth</b> แตะเลือก จำเครื่องไว้ และ<b>ต่ออัตโนมัติ</b>ทุกครั้งที่เปิด</li>
+        <li><b>โหมดเดโม</b>: กด "ข้าม" ที่หน้าแรก ดูค่าจำลองที่ขยับได้ รวมฉากเตือนต่างๆ ไม่ต้องมีรถ</li>
+      </ul>
+      <ul data-l="en">
+        <li><b>Auto-scan</b> on connect: finds which values your car really gives and shows only those</li>
+        <li>Free: RPM, speed + 10 basic values (coolant, voltage, load, throttle, intake air, MAP, oil temp, timing, MAF, fuel level)</li>
+        <li><b>All 43 values</b> — fuel trims, O2, AFR, catalyst, rail pressure, torque, fuel rate… <span class="tag">PRO</span></li>
+        <li><b>Values on/off</b> page and the full <b>supported-PID list</b> (01–A0)</li>
+        <li><b>Bluetooth ELM327 search</b> — tap to pair, remembered, <b>auto-connect</b> at power-on</li>
+        <li><b>Demo mode</b>: tap "Skip" on the start screen for moving values and the warning scenes — no car needed</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="feat">
+    <div><img class="screen" data-shot="warning" alt="" loading="lazy">
+      <div class="thumbs"><img data-shot="alerts" alt="" loading="lazy"><img data-shot="dtc" alt="" loading="lazy"><img data-shot="menu" alt="" loading="lazy"></div></div>
+    <div>
+      <h3 data-l="th">เตือนและรหัสปัญหา</h3><h3 data-l="en">Warnings &amp; trouble codes</h3>
+      <ul data-l="th">
+        <li><b>เตือนเต็มจอ + เสียง</b> เมื่อน้ำร้อนเกินหรือไฟอ่อน ปิดเองเมื่อค่ากลับมาปกติ</li>
+        <li><b>รอบสูงเกิน</b>มีเสียงเตือน · ตั้งค่าเตือนเองได้ทั้ง 3 อย่าง</li>
+        <li>เสียงเตือน 4 ระดับ: ปิด / เบา / กลาง / ดัง</li>
+        <li><b>อ่านรหัสปัญหา (DTC)</b> พร้อมคำอธิบาย และสถานะไฟเช็คเอนจิน</li>
+        <li><b>ล้างรหัสปัญหา</b> (ดับไฟเช็คเอนจิน) แตะยืนยัน 2 ครั้ง <span class="tag">PRO</span></li>
+      </ul>
+      <ul data-l="en">
+        <li><b>Full-screen warning + sound</b> for coolant too hot or voltage too low; closes itself when the value is back to normal</li>
+        <li><b>Over-rev</b> beep · all three thresholds adjustable</li>
+        <li>4 sound levels: off / low / mid / loud</li>
+        <li><b>Read trouble codes (DTC)</b> with descriptions and the check-engine light status</li>
+        <li><b>Clear trouble codes</b> (turns the check-engine light off), with a second tap to confirm <span class="tag">PRO</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="feat">
+    <div><img class="screen" data-shot="night" alt="" loading="lazy">
+      <div class="thumbs"><img data-shot="display" alt="" loading="lazy"><img data-shot="lang" alt="" loading="lazy"><img data-shot="calibrate" alt="" loading="lazy"></div></div>
+    <div>
+      <h3 data-l="th">หน้าจอและการตั้งค่า</h3><h3 data-l="en">Display &amp; settings</h3>
+      <ul data-l="th">
+        <li><b>หรี่จออัตโนมัติ</b>ตามแสงรอบตัว (เซนเซอร์แสงบนบอร์ด) ตั้งความสว่างกลางวัน/กลางคืนแยกกัน</li>
+        <li><b>โทนกลางคืน</b> สีอุ่นไม่แสบตา: อัตโนมัติ / ปิด / เปิดตลอด</li>
+        <li><b>ภาษาไทย / English</b> เลือกได้ตอนเปิดเครื่องครั้งแรก และเปลี่ยนได้ในตั้งค่า</li>
+        <li>หน่วย °C/°F · km/h/mph · หมุนจอ 180°</li>
+        <li><b>รองรับจอ CYD หลายรุ่น</b>: ตรวจชิปจออัตโนมัติ (ILI9341 / ST7789) มีปุ่มกลับสี / สลับแดง‑น้ำเงิน</li>
+        <li><b>ปรับทัช</b> 4 จุด · เสียบไฟแล้วกดปุ่ม BOOT = ปรับทัช / กดค้าง = ทดสอบสีจอ</li>
+      </ul>
+      <ul data-l="en">
+        <li><b>Auto dim</b> from the on-board light sensor, separate day and night brightness</li>
+        <li><b>Night tone</b> — warm colours that are easy on the eyes: auto / off / always</li>
+        <li><b>Thai / English</b> — chosen at first start, changeable in Setup</li>
+        <li>°C/°F · km/h/mph · rotate 180°</li>
+        <li><b>Works with CYD variants</b>: detects the display chip (ILI9341 / ST7789), with Invert and Swap R/B buttons</li>
+        <li><b>4-point touch calibration</b> · power on, then press BOOT = calibrate / hold = display colour test</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="feat">
+    <div><img class="screen" data-shot="update" alt="" loading="lazy">
+      <div class="thumbs"><img data-shot="wifi" alt="" loading="lazy"><img data-shot="unlock" alt="" loading="lazy"><img data-shot="sniff" alt="" loading="lazy"></div></div>
+    <div>
+      <h3 data-l="th">อัปเดตและเครื่องมือ</h3><h3 data-l="en">Updates &amp; tools</h3>
+      <ul data-l="th">
+        <li><b>อัปเดตออนไลน์ผ่าน Wi‑Fi</b> หรือฮอตสปอตมือถือ: ตั้งค่า → เกี่ยวกับ → อัปเดต</li>
+        <li>ตรวจไฟล์ด้วย <b>SHA‑256</b> ก่อนติดตั้ง · <b>ไฟดับระหว่างอัปเดตก็ไม่เสีย</b> เปิดใหม่แล้วทำต่อได้</li>
+        <li>ตัวอัปเดตอัปเดตตัวเองได้ ไม่ต้องต่อสายคอมอีกเลย</li>
+        <li><b>อัปเกรดเป็น PRO ผ่าน Wi‑Fi</b> หลังร้านยืนยัน (รหัสผูกกับเครื่อง)</li>
+        <li><b>ดักฟัง CAN</b> แบบฟังอย่างเดียว ผ่าน ELM327 <span class="tag">PRO</span></li>
+      </ul>
+      <ul data-l="en">
+        <li><b>Online updates over Wi‑Fi</b> or a phone hotspot: Setup → About → Update</li>
+        <li>Files checked with <b>SHA‑256</b> before installing · <b>a power cut mid-update is safe</b>, it picks up again at the next start</li>
+        <li>The updater updates itself — no computer cable needed again</li>
+        <li><b>Upgrade to PRO over Wi‑Fi</b> once the shop confirms (licence tied to the device)</li>
+        <li><b>CAN sniffer</b> — listen-only, through the ELM327 <span class="tag">PRO</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="plans">
+  <h2 data-l="th">ฟรี หรือ PRO</h2><h2 data-l="en">Free or PRO</h2>
+  <p class="sec-sub" data-l="th">ซื้อ PRO ครั้งเดียว ใช้ได้ตลอด · อัปเกรดผ่าน Wi‑Fi ไม่ต้องต่อสาย</p>
+  <p class="sec-sub" data-l="en">PRO is a one-time purchase per device · upgrade over Wi‑Fi, no cable</p>
+  <table class="plans">
+    <thead><tr><th></th><th class="c" data-l="th">ฟรี</th><th class="c" data-l="en">Free</th><th class="c">PRO</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="3"><span data-l="th">หน้าจอ</span><span data-l="en">Screens</span></td></tr>
+      <tr><td><span data-l="th">หน้าปัดรอบ + ความเร็ว + 3 ช่อง</span><span data-l="en">Tach + speed + 3 tiles</span></td><td class="c y">✓</td><td class="c y">✓</td></tr>
+      <tr><td><span data-l="th">หน้าปัด LED · เรือง · สปอร์ต</span><span data-l="en">LED · Glow · Sport dials</span></td><td class="c n">—</td><td class="c p">✓</td></tr>
+      <tr><td><span data-l="th">หน้า 4 เกจ</span><span data-l="en">Quad page</span></td><td class="c n">—</td><td class="c p">✓</td></tr>
+      <tr><td><span data-l="th">กราฟย้อนหลัง</span><span data-l="en">Graph</span></td><td class="c n">—</td><td class="c p">✓</td></tr>
+      <tr><td><span data-l="th">โหมด HUD</span><span data-l="en">HUD mode</span></td><td class="c n">—</td><td class="c p">✓</td></tr>
+      <tr class="grp"><td colspan="3"><span data-l="th">ข้อมูลรถ</span><span data-l="en">Car data</span></td></tr>
+      <tr><td><span data-l="th">ค่าพื้นฐาน 12 อย่าง (รวมรอบ/ความเร็ว)</span><span data-l="en">12 basic values (incl. RPM/speed)</span></td><td class="c y">✓</td><td class="c y">✓</td></tr>
+      <tr><td><span data-l="th">ค่าครบ 43 อย่าง</span><span data-l="en">All 43 values</span></td><td class="c n">—</td><td class="c p">✓</td></tr>
+      <tr><td><span data-l="th">อ่านรหัสปัญหา (DTC)</span><span data-l="en">Read trouble codes</span></td><td class="c y">✓</td><td class="c y">✓</td></tr>
+      <tr><td><span data-l="th">ล้างรหัสปัญหา</span><span data-l="en">Clear trouble codes</span></td><td class="c n">—</td><td class="c p">✓</td></tr>
+      <tr><td><span data-l="th">ดักฟัง CAN</span><span data-l="en">CAN sniffer</span></td><td class="c n">—</td><td class="c p">✓</td></tr>
+      <tr class="grp"><td colspan="3"><span data-l="th">ทั่วไป</span><span data-l="en">General</span></td></tr>
+      <tr><td><span data-l="th">เตือนค่าผิดปกติ + เสียง</span><span data-l="en">Warnings + sound</span></td><td class="c y">✓</td><td class="c y">✓</td></tr>
+      <tr><td><span data-l="th">หรี่จออัตโนมัติ · โทนกลางคืน</span><span data-l="en">Auto dim · night tone</span></td><td class="c y">✓</td><td class="c y">✓</td></tr>
+      <tr><td><span data-l="th">ไทย / English</span><span data-l="en">Thai / English</span></td><td class="c y">✓</td><td class="c y">✓</td></tr>
+      <tr><td><span data-l="th">อัปเดตออนไลน์ผ่าน Wi‑Fi</span><span data-l="en">Online updates over Wi‑Fi</span></td><td class="c y">✓</td><td class="c y">✓</td></tr>
+      <tr><td><span data-l="th">ฟังก์ชันใหม่ในอนาคต</span><span data-l="en">Future features</span></td><td class="c n">—</td><td class="c p">✓</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="gallery">
+  <h2 data-l="th">หน้าจอจริง</h2><h2 data-l="en">Screens</h2>
+  <p class="sec-sub" data-l="th">ภาพจากเฟิร์มแวร์เวอร์ชันล่าสุด</p><p class="sec-sub" data-l="en">From the current firmware</p>
+  <div class="gallery">
+    <figure><img class="screen" data-shot="boot" alt="" loading="lazy"><figcaption><span data-l="th">หน้าเริ่มต้น</span><span data-l="en">Start screen</span></figcaption></figure>
+    <figure><img class="screen" data-shot="main" alt="" loading="lazy"><figcaption><span data-l="th">หน้าหลัก</span><span data-l="en">Home</span></figcaption></figure>
+    <figure><img class="screen" data-shot="led" alt="" loading="lazy"><figcaption>LED · PRO</figcaption></figure>
+    <figure><img class="screen" data-shot="glow" alt="" loading="lazy"><figcaption><span data-l="th">เรือง</span><span data-l="en">Glow</span> · PRO</figcaption></figure>
+    <figure><img class="screen" data-shot="sport" alt="" loading="lazy"><figcaption><span data-l="th">สปอร์ต</span><span data-l="en">Sport</span> · PRO</figcaption></figure>
+    <figure><img class="screen" data-shot="quad" alt="" loading="lazy"><figcaption><span data-l="th">4 เกจ</span><span data-l="en">Quad</span> · PRO</figcaption></figure>
+    <figure><img class="screen" data-shot="graph" alt="" loading="lazy"><figcaption><span data-l="th">กราฟ</span><span data-l="en">Graph</span> · PRO</figcaption></figure>
+    <figure><img class="screen" data-shot="hud" alt="" loading="lazy"><figcaption>HUD · PRO</figcaption></figure>
+    <figure><img class="screen" data-shot="night" alt="" loading="lazy"><figcaption><span data-l="th">โทนกลางคืน</span><span data-l="en">Night tone</span></figcaption></figure>
+    <figure><img class="screen" data-shot="warning" alt="" loading="lazy"><figcaption><span data-l="th">เตือนน้ำร้อน</span><span data-l="en">Coolant warning</span></figcaption></figure>
+    <figure><img class="screen" data-shot="dtc" alt="" loading="lazy"><figcaption><span data-l="th">รหัสปัญหา</span><span data-l="en">Trouble codes</span></figcaption></figure>
+    <figure><img class="screen" data-shot="update" alt="" loading="lazy"><figcaption><span data-l="th">อัปเดตผ่าน Wi‑Fi</span><span data-l="en">Wi‑Fi update</span></figcaption></figure>
   </div>
 </section>
 
 <section id="install">
-  <h2>ติดตั้งรุ่นฟรีผ่านเบราว์เซอร์</h2>
-  <p class="sec-sub">ไม่ต้องลงโปรแกรม ใช้เวลาประมาณ 2 นาที</p>
+  <h2 data-l="th">ติดตั้งรุ่นฟรีผ่านเบราว์เซอร์</h2><h2 data-l="en">Install the free edition from your browser</h2>
+  <p class="sec-sub" data-l="th">ไม่ต้องลงโปรแกรม ใช้เวลาประมาณ 2 นาที</p><p class="sec-sub" data-l="en">Nothing to install on your computer · about 2 minutes</p>
   <div class="need">
-    <div><b>บอร์ด ESP32‑2432S028R</b>หรือที่เรียกว่า "CYD" จอ 2.8" สีเหลือง</div>
-    <div><b>สาย USB ที่ส่งข้อมูลได้</b>สายชาร์จอย่างเดียวจะมองไม่เห็นบอร์ด</div>
-    <div><b>Chrome หรือ Edge บนคอม</b>Windows / Mac / Linux (มือถือใช้ไม่ได้)</div>
+    <div><b>ESP32‑2432S028R</b><span data-l="th">บอร์ด "CYD" จอ 2.8" (ILI9341 · รุ่น 2 USB / ST7789 แบบทดลอง)</span><span data-l="en">the 2.8" "CYD" board (ILI9341 · "2 USB" / ST7789 in beta)</span></div>
+    <div><b><span data-l="th">ELM327 Bluetooth</span><span data-l="en">ELM327 Bluetooth</span></b><span data-l="th">แบบ Classic (v1.5 / v2.x) · ไม่รองรับแบบ BLE หรือ Wi‑Fi</span><span data-l="en">Classic (v1.5 / v2.x) · BLE or Wi‑Fi adapters won't work</span></div>
+    <div><b><span data-l="th">สาย USB ส่งข้อมูลได้</span><span data-l="en">A data USB cable</span></b><span data-l="th">สายชาร์จอย่างเดียวจะมองไม่เห็นบอร์ด</span><span data-l="en">charge-only cables won't show the board</span></div>
+    <div><b>Chrome / Edge</b><span data-l="th">บนคอม Windows / Mac / Linux (มือถือใช้ไม่ได้)</span><span data-l="en">on Windows / Mac / Linux (not on phones)</span></div>
   </div>
   <div class="install">
     <esp-web-install-button manifest="flash.json">
-      <button slot="activate" class="btn cyan">⚡ เชื่อมต่อบอร์ดและติดตั้ง</button>
-      <span slot="unsupported">เบราว์เซอร์นี้ติดตั้งไม่ได้ · ใช้ Chrome หรือ Edge บนคอมพิวเตอร์</span>
-      <span slot="not-allowed">ต้องเปิดหน้านี้ผ่าน https</span>
+      <button slot="activate" class="btn cyan">⚡ <span data-l="th">เชื่อมต่อบอร์ดและติดตั้ง</span><span data-l="en">Connect the board and install</span></button>
+      <span slot="unsupported"><span data-l="th">เบราว์เซอร์นี้ติดตั้งไม่ได้ · ใช้ Chrome หรือ Edge บนคอมพิวเตอร์</span><span data-l="en">This browser can't install · use Chrome or Edge on a computer</span></span>
+      <span slot="not-allowed"><span data-l="th">ต้องเปิดหน้านี้ผ่าน https</span><span data-l="en">This page must be opened over https</span></span>
     </esp-web-install-button>
-    <div class="note">กดแล้วเลือกพอร์ตของบอร์ด (เช่น "USB Serial" / "CH340") → ติ๊ก <b>Erase device</b> → Install<br>
+    <div class="note" data-l="th">กดแล้วเลือกพอร์ตของบอร์ด (เช่น "USB Serial" / "CH340") → ติ๊ก <b>Erase device</b> → Install<br>
       <span class="warn">ถ้าไม่เจอพอร์ต:</span> ลองสายเส้นอื่น หรือติดตั้งไดรเวอร์ CH340</div>
+    <div class="note" data-l="en">Pick the board's port (e.g. "USB Serial" / "CH340") → tick <b>Erase device</b> → Install<br>
+      <span class="warn">No port listed?</span> Try another cable or install the CH340 driver</div>
   </div>
-  <div class="steps" style="margin-top:18px">
-    <div class="step"><div><b>ปรับทัชครั้งแรก</b><span>เปิดเครื่องแล้วแตะเป้า 4 มุมตามจอ</span></div></div>
-    <div class="step"><div><b>จับคู่ ELM327</b><span>ตั้งค่า → การเชื่อมต่อ → ค้นหา → แตะชื่อ OBDII / ELM327</span></div></div>
-    <div class="step"><div><b>เสียบ ELM327 ที่ช่อง OBD ใต้คอนโซล แล้วบิดกุญแจ</b><span>เกจจะเชื่อมต่อและแสดงค่าเอง ยังไม่มีรถ? กด "ข้าม" ที่หน้าแรกเพื่อดูโหมดเดโม</span></div></div>
+  <div class="steps" style="margin-top:18px" data-l="th">
+    <div class="step"><div><b>ปรับทัชครั้งแรก แล้วเลือกภาษา</b><span>แตะเป้า 4 มุมตามจอ แล้วเลือก ไทย / English</span></div></div>
+    <div class="step"><div><b>จับคู่ ELM327</b><span>เสียบ ELM327 ที่ช่อง OBD ใต้คอนโซล บิดกุญแจ ON → ตั้งค่า → การเชื่อมต่อ → ค้นหาอุปกรณ์ → แตะชื่อ OBDII / ELM327</span></div></div>
+    <div class="step"><div><b>ใช้งาน</b><span>ครั้งต่อไปเกจจะต่อเอง · ยังไม่มีรถ? กด "ข้าม" ที่หน้าแรกเพื่อดูโหมดเดโม</span></div></div>
+  </div>
+  <div class="steps" style="margin-top:18px" data-l="en">
+    <div class="step"><div><b>Calibrate the touch, pick the language</b><span>tap the 4 targets, then choose ไทย / English</span></div></div>
+    <div class="step"><div><b>Pair the ELM327</b><span>plug it into the OBD port under the dash, key ON → Setup → Connection → Search → tap OBDII / ELM327</span></div></div>
+    <div class="step"><div><b>Drive</b><span>from then on it connects by itself · no car yet? tap "Skip" on the start screen for the demo</span></div></div>
   </div>
 </section>
 
 <section id="buy">
   <div class="buy">
     <div>
-      <h2>อัปเกรดเป็น PRO</h2>
-      <p class="sec-sub" style="margin-bottom:14px">จ่ายครั้งเดียว ใช้ได้ตลอดกับเครื่องนั้น</p>
-      <div class="steps">
+      <h2 data-l="th">อัปเกรดเป็น PRO</h2><h2 data-l="en">Upgrade to PRO</h2>
+      <p class="sec-sub" style="margin-bottom:14px" data-l="th">จ่ายครั้งเดียว ใช้ได้ตลอดกับเครื่องนั้น</p>
+      <p class="sec-sub" style="margin-bottom:14px" data-l="en">Pay once, yours for good on that device</p>
+      <div class="steps" data-l="th">
         <div class="step"><div><b>เปิด ตั้งค่า → ปลดล็อก PRO บนเกจ</b><span>จะเห็นรหัสเครื่อง 12 ตัว</span></div></div>
         <div class="step"><div><b>แอด LINE <a href="https://line.me/R/ti/p/@675hflqu">@675hflqu</a> ส่งรหัสเครื่อง + โอนเงิน</b><span>ร้านยืนยันให้ภายในวัน</span></div></div>
         <div class="step"><div><b>ตั้งค่า → เกี่ยวกับ → อัปเดต</b><span>ต่อ Wi‑Fi กด "ติดตั้งรุ่น PRO" รอ 2 นาที เสร็จ</span></div></div>
       </div>
-      <div class="btns" style="margin-top:16px"><a class="btn amber" href="https://line.me/R/ti/p/@675hflqu">แอด LINE ร้าน</a></div>
+      <div class="steps" data-l="en">
+        <div class="step"><div><b>On the gauge: Setup → Unlock PRO</b><span>it shows the 12-character device ID</span></div></div>
+        <div class="step"><div><b>Add LINE <a href="https://line.me/R/ti/p/@675hflqu">@675hflqu</a>, send the device ID + payment</b><span>confirmed the same day</span></div></div>
+        <div class="step"><div><b>Setup → About → Update</b><span>join Wi‑Fi, tap "Install PRO", about 2 minutes</span></div></div>
+      </div>
+      <div class="btns" style="margin-top:16px"><a class="btn amber" href="https://line.me/R/ti/p/@675hflqu"><span data-l="th">แอด LINE ร้าน</span><span data-l="en">Add us on LINE</span></a></div>
     </div>
-    <img src="img/line-qr.png" alt="QR LINE @675hflqu" width="170" height="170">
+    <img src="img/line-qr.png" alt="LINE @675hflqu" width="170" height="170">
   </div>
+</section>
+
+<section id="faq" class="faq">
+  <h2 data-l="th">คำถามที่พบบ่อย</h2><h2 data-l="en">FAQ</h2>
+  <details><summary><span data-l="th">ใช้กับรถอะไรได้บ้าง?</span><span data-l="en">Which cars does it work with?</span></summary>
+    <p data-l="th">รถที่มีช่อง OBD‑II และ ELM327 อ่านได้ (รถเบนซินในไทยส่วนใหญ่ตั้งแต่ราวปี 2008) ค่าที่ได้ขึ้นกับรถแต่ละคัน เกจจะสแกนให้เองตอนเชื่อมต่อ</p>
+    <p data-l="en">Cars with an OBD‑II port that an ELM327 can read (most petrol cars from around 2008 on). Which values you get depends on the car — the gauge scans them on connect.</p></details>
+  <details><summary><span data-l="th">ELM327 แบบไหนใช้ได้?</span><span data-l="en">Which ELM327 adapters work?</span></summary>
+    <p data-l="th">แบบ Bluetooth Classic (จับคู่ด้วยรหัส 1234 / 0000) ส่วนแบบ BLE (สำหรับ iPhone) และแบบ Wi‑Fi ใช้ไม่ได้</p>
+    <p data-l="en">Bluetooth Classic adapters (pairing code 1234 / 0000). BLE (iPhone-only) and Wi‑Fi adapters do not work.</p></details>
+  <details><summary><span data-l="th">ไฟดับระหว่างอัปเดตจะเสียไหม?</span><span data-l="en">What if power is lost during an update?</span></summary>
+    <p data-l="th">ไม่เสีย ตัวอัปเดตแยกอยู่คนละส่วน เปิดเครื่องใหม่จะกลับมาที่หน้าอัปเดตให้ทำต่อ และจะติดตั้งเฉพาะไฟล์ที่ตรวจ SHA‑256 ผ่านแล้วเท่านั้น</p>
+    <p data-l="en">Nothing breaks. The updater lives in its own slot; after a restart it comes back to the update screen, and it only installs files that pass the SHA‑256 check.</p></details>
+  <details><summary><span data-l="th">PRO ย้ายไปบอร์ดอื่นได้ไหม?</span><span data-l="en">Can PRO move to another board?</span></summary>
+    <p data-l="th">รหัส PRO ผูกกับชิปของบอร์ดนั้น ถ้าบอร์ดเสียหรือเปลี่ยนบอร์ด ติดต่อร้านทาง LINE</p>
+    <p data-l="en">The PRO licence is tied to that board's chip. If the board fails or you replace it, contact the shop on LINE.</p></details>
+  <details><summary><span data-l="th">ทัชเพี้ยน / สีจอเพี้ยน ทำยังไง?</span><span data-l="en">Touch or colours look wrong?</span></summary>
+    <p data-l="th">เสียบไฟก่อน แล้วภายใน 1.5 วินาที (ตอนที่มีข้อความเล็กๆ ขึ้นล่างจอ) กดปุ่ม BOOT = ปรับทัช · กดค้าง = ขึ้นแถบสีทดสอบ ปล่อยปุ่มตอนสีถูก</p>
+    <p data-l="en">Power on first, then within 1.5 s (while the small hint shows at the bottom) press BOOT = touch calibration · hold it = colour test card, release when the colours look right.</p></details>
 </section>
 
 <footer>DESIGN BY WATCHAR</footer>
 </div>
+
+<div class="lightbox" id="lb" role="dialog" aria-modal="true"><img alt=""></div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  function stored() { try { return localStorage.getItem("lang"); } catch (e) { return null; } }
+  function remember(l) { try { localStorage.setItem("lang", l); } catch (e) {} }
+  function apply(l) {
+    root.setAttribute("data-lang", l);
+    root.setAttribute("lang", l);
+    document.querySelectorAll("img[data-shot]").forEach(function (im) {
+      var want = "img/" + l + "/" + im.getAttribute("data-shot") + ".png";
+      if (im.getAttribute("src") !== want) im.setAttribute("src", want);
+    });
+    document.querySelectorAll(".langsw button").forEach(function (b) { b.classList.toggle("on", b.getAttribute("data-set") === l); });
+    document.title = l === "th" ? "OBD/GAUGE · เกจวัดรถยนต์ผ่าน OBD" : "OBD/GAUGE · OBD-II car gauge for the ESP32 CYD";
+  }
+  var l = stored() || ((navigator.language || "").toLowerCase().indexOf("th") === 0 ? "th" : "en");
+  apply(l);
+  document.querySelectorAll(".langsw button").forEach(function (b) {
+    b.addEventListener("click", function () { var v = b.getAttribute("data-set"); remember(v); apply(v); });
+  });
+  var lb = document.getElementById("lb"), lbi = lb.querySelector("img");
+  document.querySelectorAll("img[data-shot]").forEach(function (im) {
+    im.style.cursor = "zoom-in";
+    im.addEventListener("click", function () { lbi.src = im.src; lb.classList.add("on"); });
+  });
+  lb.addEventListener("click", function () { lb.classList.remove("on"); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") lb.classList.remove("on"); });
+})();
+</script>
 </body>
 </html>
