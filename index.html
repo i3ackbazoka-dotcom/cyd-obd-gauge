@@ -87,6 +87,20 @@ esp-web-install-button [slot="unsupported"],esp-web-install-button [slot="not-al
 .prod .row{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:6px}
 .prod .pr{font:700 17px "Chakra Petch",sans-serif;color:var(--amber)}
 .prod .go{font-size:13px;color:var(--cyan);font-weight:600}
+.tip{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:8;width:196px;background:#0e1319;border:1px solid rgba(255,178,36,.45);
+  border-radius:18px;padding:14px 14px 12px;text-align:center;box-shadow:0 18px 50px rgba(0,0,0,.55)}
+.tip .t{font:700 16px "Chakra Petch","IBM Plex Sans Thai",sans-serif;color:var(--amber);margin-bottom:2px}
+.tip .s{font-size:12px;color:var(--muted);line-height:1.45;margin-bottom:10px}
+.tip img{width:100%;height:auto;aspect-ratio:1;border-radius:10px;background:#fff;padding:6px;display:block}
+.tip .pp{font:600 13px "Chakra Petch",sans-serif;color:var(--sub);margin-top:8px;letter-spacing:.5px}
+.tip .x{position:absolute;right:6px;top:4px;background:none;border:0;color:var(--muted);font-size:18px;line-height:1;cursor:pointer;padding:4px 6px}
+.tipbtn{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:8;display:none;border:1px solid rgba(255,178,36,.45);border-right:0;
+  background:#0e1319;color:var(--amber);border-radius:12px 0 0 12px;padding:12px 8px;cursor:pointer;
+  font:600 14px "Chakra Petch","IBM Plex Sans Thai",sans-serif;writing-mode:vertical-rl;letter-spacing:1px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.tipbtn .cup{writing-mode:horizontal-tb;display:block;margin-bottom:6px;font-size:18px}
+html.tip-closed .tip{display:none}html.tip-closed .tipbtn{display:block}
+@media (max-width:1439px){html:not(.tip-open) .tip{display:none}html:not(.tip-open) .tipbtn{display:block}}
+@media (max-width:820px){.tipbtn{top:auto;bottom:18px;transform:none}.tip{top:auto;bottom:18px;transform:none}}
 .disclose{color:#5d6873;font-size:12px;margin-top:12px}
 .faq details{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px}
 .faq summary{cursor:pointer;font-weight:600}
@@ -392,6 +406,16 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
 <footer>DESIGN BY WATCHAR</footer>
 </div>
 
+<aside class="tip" id="tip" aria-label="PromptPay">
+  <button class="x" type="button" id="tipX" aria-label="close">×</button>
+  <div class="t">☕ <span data-l="th">เลี้ยงกาแฟผู้พัฒนา</span><span data-l="en">Buy me a coffee</span></div>
+  <div class="s" data-l="th">ชอบเกจนี้? สแกนพร้อมเพย์ ใส่ยอดเท่าไหร่ก็ได้ ขอบคุณครับ</div>
+  <div class="s" data-l="en">Like the gauge? Scan with a Thai banking app (PromptPay), any amount</div>
+  <img src="img/promptpay-qr.png" alt="PromptPay QR" width="330" height="330">
+  <div class="pp"><span data-l="th">พร้อมเพย์</span><span data-l="en">PromptPay</span> 082‑769‑3233</div>
+</aside>
+<button class="tipbtn" type="button" id="tipB"><span class="cup">☕</span><span data-l="th">ค่ากาแฟ</span><span data-l="en">Coffee</span></button>
+
 <div class="lightbox" id="lb" role="dialog" aria-modal="true"><img alt=""></div>
 
 <script>
@@ -420,6 +444,15 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
     im.addEventListener("click", function () { lbi.src = im.src; lb.classList.add("on"); });
   });
   lb.addEventListener("click", function () { lb.classList.remove("on"); });
+
+  // coffee / PromptPay card: always open on wide screens (unless closed), a side tab otherwise
+  function tipSet(open) {
+    root.classList.toggle("tip-open", open); root.classList.toggle("tip-closed", !open);
+    try { localStorage.setItem("tip", open ? "1" : "0"); } catch (e) {}
+  }
+  try { if (localStorage.getItem("tip") === "0") root.classList.add("tip-closed"); } catch (e) {}
+  document.getElementById("tipB").addEventListener("click", function () { tipSet(true); });
+  document.getElementById("tipX").addEventListener("click", function () { tipSet(false); });
 
   // recommended parts (affiliate links), managed in the shop's admin page
   fetch("https://obd-gauge.i3ackbazoka.workers.dev/v1/aff").then(function (r) { return r.json(); }).then(function (d) {
