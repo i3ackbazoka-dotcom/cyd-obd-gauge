@@ -15,7 +15,7 @@
 | หรี่จออัตโนมัติ · โทนกลางคืน · Auto dim · night tone | ✓ | ✓ |
 | ไทย / English · อัปเดตผ่าน Wi‑Fi · Wi‑Fi updates | ✓ | ✓ |
 | หน้า 4 เกจ · กราฟ · หน้าปัด LED/เรือง/สปอร์ต · Quad · graph · LED/Glow/Sport dials | | ✓ |
-| ค่าครบ 43 อย่าง · ล้าง DTC · HUD · ดักฟัง CAN · All 43 values · clear DTC · HUD · CAN sniffer | | ✓ |
+| ค่าครบ 43 อย่าง · ล้าง DTC · HUD · All 43 values · clear DTC · HUD | | ✓ |
 
 **PRO:** แอด LINE / add LINE [@675hflqu](https://line.me/R/ti/p/@675hflqu) — ส่งรหัสเครื่อง (ตั้งค่า → ปลดล็อก PRO) · send your device ID (Setup → Unlock PRO). จ่ายครั้งเดียว · one-time purchase.
 
