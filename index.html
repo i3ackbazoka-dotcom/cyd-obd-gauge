@@ -74,6 +74,13 @@ esp-web-install-button [slot="unsupported"],esp-web-install-button [slot="not-al
 .buy{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;background:linear-gradient(135deg,rgba(255,178,36,.10),rgba(59,201,240,.06));
   border:1px solid rgba(255,178,36,.35);border-radius:20px;padding:26px}
 .buy img{width:170px;border-radius:12px;background:#fff;padding:8px;display:block}
+.buy .price{display:inline-block;font:700 22px "Chakra Petch",sans-serif;color:#1a1100;background:linear-gradient(180deg,#ffc24d,#ffa514);border-radius:10px;padding:2px 12px;vertical-align:4px;margin-left:6px}
+.qrs{display:flex;flex-direction:column;gap:14px}.qrs figure{margin:0;text-align:center}
+.buy .was{font:600 18px "Chakra Petch",sans-serif;color:var(--muted);margin-left:8px}
+.promo{display:inline-block;margin:-4px 0 12px;font-weight:600;font-size:14px;color:#1a1100;background:var(--amber);border-radius:8px;padding:3px 10px}
+#ppqr svg{width:170px;height:170px;display:block;background:#fff;border-radius:12px;padding:8px;box-sizing:border-box}
+.qrnote{grid-column:1/-1;font-size:12px;color:var(--muted);margin:0;text-align:center}
+.qrs figcaption{font-size:13px;color:var(--sub);margin-top:6px;font-weight:600}
 .prods{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .prod{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:var(--text);transition:border-color .15s,transform .15s}
 .prod:hover{border-color:#2f3a45;transform:translateY(-2px)}
@@ -112,7 +119,7 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
 @media (max-width:820px){
   .hero{grid-template-columns:1fr}.hero .screen{margin:0 auto;max-width:340px}h1{font-size:31px}
   .feat{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr}.prods{grid-template-columns:1fr 1fr}.need{grid-template-columns:1fr 1fr}
-  .buy{grid-template-columns:1fr;text-align:center}.buy img{margin:0 auto}header nav{display:none}.langsw{margin-left:auto}}
+  .buy{grid-template-columns:1fr;text-align:center}.buy img{margin:0 auto}.qrs{flex-direction:row;justify-content:center}.qrs img{width:140px}header nav{display:none}.langsw{margin-left:auto}}
 @media (max-width:420px){.need{grid-template-columns:1fr}.plans td.c,.plans th.c{width:56px;padding:10px 6px}}
 </style>
 </head>
@@ -366,22 +373,30 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
 <section id="buy">
   <div class="buy">
     <div>
-      <h2 data-l="th">อัปเกรดเป็น PRO</h2><h2 data-l="en">Upgrade to PRO</h2>
+      <h2 data-l="th">อัปเกรดเป็น PRO <s class="was pp-was" hidden></s> <span class="price">฿<span class="pp-price">299</span></span></h2><h2 data-l="en">Upgrade to PRO <s class="was pp-was" hidden></s> <span class="price">฿<span class="pp-price">299</span></span></h2>
+      <p class="promo pp-note" hidden></p>
       <p class="sec-sub" style="margin-bottom:14px" data-l="th">จ่ายครั้งเดียว ใช้ได้ตลอดกับเครื่องนั้น</p>
       <p class="sec-sub" style="margin-bottom:14px" data-l="en">Pay once, yours for good on that device</p>
       <div class="steps" data-l="th">
         <div class="step"><div><b>เปิด ตั้งค่า → ปลดล็อก PRO บนเกจ</b><span>จะเห็นรหัสเครื่อง 12 ตัว</span></div></div>
-        <div class="step"><div><b>แอด LINE <a href="https://line.me/R/ti/p/@675hflqu">@675hflqu</a> ส่งรหัสเครื่อง + โอนเงิน</b><span>ร้านยืนยันให้ภายในวัน</span></div></div>
+        <div class="step"><div><b>สแกน QR พร้อมเพย์ จ่าย ฿<span class="pp-price">299</span></b><span>ยอดใส่ไว้ให้แล้ว ใช้แอปธนาคารไหนก็ได้</span></div></div>
+        <div class="step"><div><b>ส่งสลิป + รหัสเครื่อง ทาง LINE <a href="https://line.me/R/ti/p/@675hflqu">@675hflqu</a></b><span>ร้านยืนยันให้ภายในวัน</span></div></div>
         <div class="step"><div><b>ตั้งค่า → เกี่ยวกับ → อัปเดต</b><span>ต่อ Wi‑Fi กด "ติดตั้งรุ่น PRO" รอ 2 นาที เสร็จ</span></div></div>
       </div>
       <div class="steps" data-l="en">
         <div class="step"><div><b>On the gauge: Setup → Unlock PRO</b><span>it shows the 12-character device ID</span></div></div>
-        <div class="step"><div><b>Add LINE <a href="https://line.me/R/ti/p/@675hflqu">@675hflqu</a>, send the device ID + payment</b><span>confirmed the same day</span></div></div>
+        <div class="step"><div><b>Scan the PromptPay QR, pay ฿<span class="pp-price">299</span></b><span>amount already filled in · any Thai banking app</span></div></div>
+        <div class="step"><div><b>Send the slip + device ID on LINE <a href="https://line.me/R/ti/p/@675hflqu">@675hflqu</a></b><span>confirmed the same day</span></div></div>
         <div class="step"><div><b>Setup → About → Update</b><span>join Wi‑Fi, tap "Install PRO", about 2 minutes</span></div></div>
       </div>
       <div class="btns" style="margin-top:16px"><a class="btn amber" href="https://line.me/R/ti/p/@675hflqu"><span data-l="th">แอด LINE ร้าน</span><span data-l="en">Add us on LINE</span></a></div>
     </div>
-    <img src="img/line-qr.png" alt="LINE @675hflqu" width="170" height="170">
+    <div class="qrs">
+      <figure><div id="ppqr"><img src="img/promptpay-pro.png" alt="PromptPay" width="170" height="170"></div><figcaption><span data-l="th">① จ่าย ฿<span class="pp-price">299</span> · พร้อมเพย์</span><span data-l="en">① Pay ฿<span class="pp-price">299</span> · PromptPay</span></figcaption></figure>
+      <figure><img src="img/line-qr.png" alt="LINE @675hflqu" width="170" height="170"><figcaption><span data-l="th">② ส่งสลิป + รหัสเครื่อง</span><span data-l="en">② Send slip + device ID</span></figcaption></figure>
+    </div>
+    <p class="qrnote" data-l="th">เปิดหน้านี้บนมือถือ? กดค้างที่ QR เพื่อบันทึกรูป แล้วเลือก "สแกนจากรูป" ในแอปธนาคาร</p>
+    <p class="qrnote" data-l="en">On a phone? Long-press the QR to save it, then use "scan from image" in your banking app</p>
   </div>
 </section>
 
@@ -454,6 +469,23 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
   try { if (localStorage.getItem("tip") === "0") root.classList.add("tip-closed"); } catch (e) {}
   document.getElementById("tipB").addEventListener("click", function () { tipSet(true); });
   document.getElementById("tipX").addEventListener("click", function () { tipSet(false); });
+
+  // PRO price + PromptPay QR with that amount, set in the shop's admin page (promotions)
+  fetch("https://obd-gauge.i3ackbazoka.workers.dev/v1/price").then(function (r) { return r.json(); }).then(function (d) {
+    if (!d || !(d.price > 0)) return;
+    var p = Number(d.price).toLocaleString("en-US");
+    document.querySelectorAll(".pp-price").forEach(function (e) { e.textContent = p; });
+    document.querySelectorAll(".pp-was").forEach(function (e) {
+      if (d.was > d.price) { e.textContent = "฿" + Number(d.was).toLocaleString("en-US"); e.hidden = false; } });
+    document.querySelectorAll(".pp-note").forEach(function (e) { if (d.note) { e.textContent = d.note; e.hidden = false; } });
+    function draw() {
+      if (typeof qrcode !== "function" || !d.payload) return;
+      var q = qrcode(0, "M"); q.addData(d.payload); q.make();
+      document.getElementById("ppqr").innerHTML = q.createSvgTag({ cellSize: 4, margin: 2, scalable: true });
+    }
+    if (typeof qrcode === "function") draw();
+    else { var sc = document.createElement("script"); sc.src = "https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"; sc.onload = draw; document.head.appendChild(sc); }
+  }).catch(function () {});
 
   // recommended parts (affiliate links), managed in the shop's admin page
   fetch("https://obd-gauge.i3ackbazoka.workers.dev/v1/aff").then(function (r) { return r.json(); }).then(function (d) {
