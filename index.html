@@ -29,7 +29,13 @@ body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 "IBM Plex Sa
   background-image:radial-gradient(1000px 480px at 50% -160px,rgba(59,201,240,.14),transparent 70%)}
 a{color:var(--cyan)}
 .wrap{max-width:980px;margin:0 auto;padding:0 18px}
-header{display:flex;align-items:center;gap:12px;padding:20px 0;position:relative}
+html{scroll-behavior:smooth}body{overflow-x:clip}
+/* header stays on top while scrolling; the bar behind it spans the whole window */
+header{display:flex;align-items:center;gap:12px;padding:14px 0;position:sticky;top:0;z-index:7}
+header:before{content:"";position:absolute;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);z-index:-1;
+  background:rgba(5,7,10,.86);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+section,[id]{scroll-margin-top:78px}
 .word{font:italic 700 24px/1 "Chakra Petch",sans-serif;letter-spacing:.5px}.word b{color:var(--cyan)}
 header nav{margin-left:auto;display:flex;gap:18px;font-size:14px}header nav a{color:var(--sub);text-decoration:none}
 header nav a:hover{color:var(--text)}
@@ -142,11 +148,12 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
 <body>
 <div class="wrap">
 <header>
+  <a class="brand" href="#" id="totop" aria-label="OBD/GAUGE">
   <svg width="40" height="26" viewBox="0 0 96 56" aria-hidden="true">
     <polygon fill="#3bc9f0" points="4,56 16,56 20,40 8,40"/><polygon fill="#3bc9f0" points="20,56 32,56 38.5,30 26.5,30"/>
     <polygon fill="#3bc9f0" points="36,56 48,56 57,20 45,20"/><polygon fill="#ffb224" points="52,56 64,56 75.5,10 63.5,10"/>
     <polygon fill="#ff5a4e" points="68,56 80,56 94,0 82,0"/></svg>
-  <div class="word">OBD<b>/</b>GAUGE</div>
+  <div class="word">OBD<b>/</b>GAUGE</div></a>
   <nav>
     <a href="#features"><span data-l="th">ฟังก์ชัน</span><span data-l="en">Features</span></a>
     <a href="#plans"><span data-l="th">ฟรี / PRO</span><span data-l="en">Free / PRO</span></a>
@@ -552,6 +559,10 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
   }).catch(function () {});
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") lb.classList.remove("on"); });
 })();
+</script>
+<script>
+document.getElementById("totop").addEventListener("click",function(e){   // logo: back to the top
+  e.preventDefault();window.scrollTo({top:0,behavior:"smooth"});history.replaceState(null,"",location.pathname+location.search);});
 </script>
 </body>
 </html>
