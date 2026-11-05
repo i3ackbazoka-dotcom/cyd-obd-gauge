@@ -1,11 +1,11 @@
 {
- "version": "0.13.5",
+ "version": "0.13.6",
  "url": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/firmware.bin",
- "size": 1596800,
- "sha256": "c6bc58704b6634a623159522ffaaeeed643064c9a8ee0495cf0ba32d13304ad5",
+ "size": 1596992,
+ "sha256": "ad27c5a3a50f49678cf3090d2ab8ff9fc5f832b607493630b147995ad95a37a3",
  "notes": "",
- "ubuild": 8,
+ "ubuild": 9,
  "uurl": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/updater.bin",
- "usize": 1292720,
- "usha256": "42480d33ad9073d1991bf4efaf35960ec7bc4f577e68cbcab33ad0e7b476a0fb"
+ "usize": 1294624,
+ "usha256": "bb54f1ed34cde74efc5439f25bd407461cf8aa82a094b830779f8a662450cf8f"
 }
