@@ -1,6 +1,6 @@
 {
  "name": "OBD/GAUGE",
- "version": "0.13.6",
+ "version": "0.13.7",
  "new_install_prompt_erase": true,
  "builds": [
   {
