@@ -1,11 +1,11 @@
 {
- "version": "0.14.2",
+ "version": "0.14.3",
  "url": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/firmware.bin",
- "size": 1599136,
- "sha256": "faefdb7435b3e74eadc08c60d935c603765c23e7d87d30b7f86b7d8b9a5e49c6",
- "notes": "",
+ "size": 1599792,
+ "sha256": "a2559bfe30f1c40cccc446419849fe5d5a72401d38e3407443c07d58f4e9f5ac",
+ "notes": "ตั้งหน้าแรกตอนเปิดเครื่องได้ · หน้าลมยาง (PRO) · HUD ย้ายไปเมนูตั้งค่า · ปรับคำไทย/อังกฤษ",
  "ubuild": 10,
  "uurl": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/updater.bin",
  "usize": 1294832,
- "usha256": "6b8b6a8e7d41dc3ec11a016f4f9ab67e9d95a0cb599303342ae0561045ebc447"
+ "usha256": "7f0c7372fed6091cca95bd7cc04303efb4d93c979976b8f6980d6cac6e2b5f7a"
 }
