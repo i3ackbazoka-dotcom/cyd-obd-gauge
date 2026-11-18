@@ -1,9 +1,9 @@
 {
- "version": "1.1.2",
+ "version": "1.1.3",
  "url": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/firmware.bin",
  "size": 1635936,
- "sha256": "e76d2fca67057899fbe0978a2ea6b32da0353478e354475078b955bcd41ad6e7",
- "notes": "แพ็ก Toyota: แถบล่างเป็น หลัก · แบตไฮบริด · ลมยาง · HUD ให้เอง (4 เกจ · กราฟ อยู่ในตั้งค่า) · ราคาโปรแพ็ก Toyota บนเว็บ",
+ "sha256": "f005b77882759a366f05237da8bd3abe55d372458a4cc330a41f7750e1dd3cde",
+ "notes": "แก้หน้า PRO ↔ Toyota Hybrid วนไปมาออกไม่ได้ · แพ็ก Toyota เปิด/ปิดตามร้านทุกเครื่อง",
  "ubuild": 12,
  "uurl": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/updater.bin",
  "usize": 1296000,
