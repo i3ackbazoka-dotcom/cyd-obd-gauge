@@ -109,6 +109,7 @@ esp-web-install-button [slot="unsupported"],esp-web-install-button [slot="not-al
 .qtabs button.on{background:var(--amber);color:#1a1100}
 .qsave{margin-top:8px;font:600 13px "IBM Plex Sans Thai",sans-serif;padding:8px 14px;border-radius:10px;border:1px solid rgba(255,178,36,.5);background:transparent;color:var(--amber);cursor:pointer}
 .buy .was{font:600 18px "Chakra Petch",sans-serif;color:var(--muted);margin-left:8px}
+.plans .was{font-weight:500;color:var(--muted);font-size:.85em;margin-right:2px}
 .promo{display:inline-block;margin:-4px 0 12px;font-weight:600;font-size:14px;color:#1a1100;background:var(--amber);border-radius:8px;padding:3px 10px}
 #ppqr img{width:170px;height:170px}
 .qrnote{grid-column:1/-1;font-size:12px;color:var(--muted);margin:0;text-align:center}
@@ -428,7 +429,7 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
       <tr><td><span data-l="th">แบตไฮบริด: SOC · kW · V · A</span><span data-l="en">Hybrid battery: SOC · kW · V · A</span></td><td class="c n">—</td><td class="c n">—</td><td class="c t">✓</td></tr>
       <tr><td><span data-l="th">หล่อเย็นอินเวอร์เตอร์ · อุณหภูมิแบต*</span><span data-l="en">Inverter coolant · battery temp*</span></td><td class="c n">—</td><td class="c n">—</td><td class="c t">✓</td></tr>
       <tr class="grp"><td colspan="4"><span data-l="th">ราคา</span><span data-l="en">Price</span></td></tr>
-      <tr><td><span data-l="th">จ่ายครั้งเดียว</span><span data-l="en">One-time</span></td><td class="c y"><span data-l="th">ฟรี</span><span data-l="en">free</span></td><td class="c p">฿<span class="pp-price">299</span></td><td class="c t">฿<span class="pp-bundle">459</span></td></tr>
+      <tr><td><span data-l="th">จ่ายครั้งเดียว</span><span data-l="en">One-time</span></td><td class="c y"><span data-l="th">ฟรี</span><span data-l="en">free</span></td><td class="c p"><s class="was pp-was" hidden></s> ฿<span class="pp-price">299</span></td><td class="c t"><s class="was pp-bwas" hidden></s> ฿<span class="pp-bundle">459</span></td></tr>
       <tr><td><span data-l="th">ฟังก์ชันใหม่ในอนาคต</span><span data-l="en">Future features</span></td><td class="c n">—</td><td class="c p">✓</td><td class="c t">✓</td></tr>
     </tbody>
   </table>
@@ -515,8 +516,8 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
       <h2 data-l="th">ซื้อ PRO / Toyota Hybrid</h2><h2 data-l="en">Buy PRO / Toyota Hybrid</h2>
       <div class="plantabs" role="tablist">
         <button type="button" class="on" data-plan="pro"><b>PRO <s class="was pp-was" hidden></s> ฿<span class="pp-price">299</span></b><span data-l="th">ทุกฟังก์ชัน PRO</span><span data-l="en">all PRO features</span></button>
-        <button type="button" data-plan="bundle"><b>PRO + Toyota ฿<span class="pp-bundle">459</span></b><span data-l="th">PRO + ลมยาง + แบตไฮบริด</span><span data-l="en">PRO + tyres + hybrid</span></button>
-        <button type="button" data-plan="addon"><b>+ Toyota ฿<span class="pp-addon">199</span></b><span data-l="th">เครื่องที่มี PRO แล้ว</span><span data-l="en">for a unit with PRO</span></button>
+        <button type="button" data-plan="bundle"><b>PRO + Toyota <s class="was pp-bwas" hidden></s> ฿<span class="pp-bundle">459</span></b><span data-l="th">PRO + ลมยาง + แบตไฮบริด</span><span data-l="en">PRO + tyres + hybrid</span></button>
+        <button type="button" data-plan="addon"><b>+ Toyota <s class="was pp-awas" hidden></s> ฿<span class="pp-addon">199</span></b><span data-l="th">เครื่องที่มี PRO แล้ว</span><span data-l="en">for a unit with PRO</span></button>
       </div>
       <p class="promo pp-note" hidden></p>
       <p class="sec-sub" style="margin-bottom:14px" data-l="th">จ่ายครั้งเดียว ใช้ได้ตลอดกับเครื่องนั้น</p>
@@ -660,8 +661,12 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
     document.querySelectorAll(".pp-price").forEach(function (e) { e.textContent = fmt(d.price); });
     document.querySelectorAll(".pp-bundle").forEach(function (e) { e.textContent = fmt(d.bundle); });
     document.querySelectorAll(".pp-addon").forEach(function (e) { e.textContent = fmt(d.addon); });
-    document.querySelectorAll(".pp-was").forEach(function (e) {
-      if (d.was > d.price) { e.textContent = "฿" + fmt(d.was); e.hidden = false; } });
+    function was(sel, old, now) {                 // struck-out normal price (launch promotion), each plan on its own
+      document.querySelectorAll(sel).forEach(function (e) { if (old > now) { e.textContent = "฿" + fmt(old); e.hidden = false; } });
+    }
+    was(".pp-was", d.was, d.price);
+    was(".pp-bwas", d.bundleWas, d.bundle);
+    was(".pp-awas", d.addonWas, d.addon);
     document.querySelectorAll(".pp-note").forEach(function (e) { if (d.note) { e.textContent = d.note; e.hidden = false; } });
     if (typeof qrcode === "function") drawQr();
     else { var sc = document.createElement("script"); sc.src = "https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"; sc.onload = drawQr; document.head.appendChild(sc); }
