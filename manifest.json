@@ -1,11 +1,11 @@
 {
- "version": "1.1.3",
+ "version": "1.1.4",
  "url": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/firmware.bin",
- "size": 1635936,
- "sha256": "f005b77882759a366f05237da8bd3abe55d372458a4cc330a41f7750e1dd3cde",
- "notes": "แก้หน้า PRO ↔ Toyota Hybrid วนไปมาออกไม่ได้ · แพ็ก Toyota เปิด/ปิดตามร้านทุกเครื่อง",
- "ubuild": 12,
+ "size": 1641616,
+ "sha256": "3ae357536a548d48bd3ea8638b7db722c84497121e7fc3b02377a2227013145f",
+ "notes": "จอ ST7789 สีและทิศภาพถูกต้อง เลือกชิปจออัตโนมัติ · ตรวจสีจอตอนเริ่มใช้ · เลือกชิปจอในตั้งค่า",
+ "ubuild": 13,
  "uurl": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/updater.bin",
- "usize": 1296000,
- "usha256": "e94667c34793726bbf8cff7f8780fd28bc1588408dbebbcf44e76026474a7881"
+ "usize": 1296816,
+ "usha256": "ff11b98c0445824a3998733e3afdaf098ddf4f21c87a8802d7d33c6b8d5a4586"
 }
