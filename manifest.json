@@ -1,11 +1,11 @@
 {
- "version": "0.14.3",
+ "version": "1.1.0",
  "url": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/firmware.bin",
- "size": 1599792,
- "sha256": "a2559bfe30f1c40cccc446419849fe5d5a72401d38e3407443c07d58f4e9f5ac",
- "notes": "ตั้งหน้าแรกตอนเปิดเครื่องได้ · หน้าลมยาง (PRO) · HUD ย้ายไปเมนูตั้งค่า · ปรับคำไทย/อังกฤษ",
- "ubuild": 10,
+ "size": 1634784,
+ "sha256": "c61c908bd4ec8e087ec3f358960e78c21bbe34e08317faae761a770557091dba",
+ "notes": "ปรับทัชละเอียด 9 จุด · เทียบเซนเซอร์แสง · HUD เข้าเองใน 30 วิ · ความเร็วไม่ค้างตอนจอด · อัปเดตเร็วขึ้น · แก้ค้างตอนเปลี่ยนภาษา",
+ "ubuild": 12,
  "uurl": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/updater.bin",
- "usize": 1294832,
- "usha256": "7f0c7372fed6091cca95bd7cc04303efb4d93c979976b8f6980d6cac6e2b5f7a"
+ "usize": 1296000,
+ "usha256": "3a1c59cdb7b765ec0fc2b78c8f125ed31595e848d939c11460591aa6f34456fe"
 }

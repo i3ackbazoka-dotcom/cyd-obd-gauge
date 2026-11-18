@@ -71,11 +71,21 @@ h2{font:700 26px/1.3 "Chakra Petch","IBM Plex Sans Thai",sans-serif;margin:0 0 6
 .plans th,.plans td{padding:10px 14px;border-top:1px solid var(--line);text-align:left}
 .plans thead th{border-top:0;font:700 16px "Chakra Petch","IBM Plex Sans Thai";background:var(--panel2)}
 .plans td.c,.plans th.c{text-align:center;width:90px}
-.plans .y{color:var(--cyan);font-weight:700}.plans .p{color:var(--amber);font-weight:700}.plans .n{color:#4a545e}
+.plans .y{color:var(--cyan);font-weight:700}.plans .p{color:var(--amber);font-weight:700}.plans .n{color:#4a545e}.plans .t{color:#ff6b78;font-weight:700}
+.tag.th{background:#e94b5a;color:#fff}
+.feat.toyota{border-color:rgba(233,75,90,.45);background:linear-gradient(135deg,rgba(233,75,90,.08),var(--panel) 55%)}
+.plantabs{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 16px}
+.plantabs button{font:600 14px "IBM Plex Sans Thai",system-ui,sans-serif;padding:9px 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--sub);cursor:pointer;text-align:left;line-height:1.3}
+.plantabs button b{display:block;font:700 18px "Chakra Petch",system-ui,sans-serif;color:var(--text)}
+.plantabs button.on{border-color:var(--amber);background:rgba(255,178,36,.10);color:var(--text)}
+.plantabs button.on b{color:var(--amber)}
+.plantabs button[data-plan="addon"].on,.plantabs button[data-plan="bundle"].on{border-color:#e94b5a;background:rgba(233,75,90,.10)}
+.plantabs button[data-plan="addon"].on b,.plantabs button[data-plan="bundle"].on b{color:#ff6b78}
 .plans tr.grp td{background:#0a0e13;color:var(--muted);font-size:13px;letter-spacing:.5px}
 .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .gallery figure{margin:0}.gallery figcaption{font-size:13px;color:var(--muted);margin-top:6px;text-align:center}
 .gallery .screen{border-width:4px;border-radius:9px}
+.galhead{margin:28px 0 12px;font:700 19px "Chakra Petch","IBM Plex Sans Thai",sans-serif}
 .steps{counter-reset:s;display:grid;gap:12px}
 .step{display:flex;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
 .step:before{counter-increment:s;content:counter(s);flex:none;width:30px;height:30px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);
@@ -157,6 +167,7 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
   <nav>
     <a href="#features"><span data-l="th">ฟังก์ชัน</span><span data-l="en">Features</span></a>
     <a href="#plans"><span data-l="th">ฟรี / PRO</span><span data-l="en">Free / PRO</span></a>
+    <a href="#toyota">Toyota</a>
     <a href="#install"><span data-l="th">ติดตั้ง</span><span data-l="en">Install</span></a>
     <a href="#parts" id="nav-parts" hidden><span data-l="th">ซื้ออุปกรณ์</span><span data-l="en">Parts</span></a>
     <a href="#buy"><span data-l="th">ซื้อ PRO</span><span data-l="en">Buy PRO</span></a>
@@ -188,12 +199,12 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
 
 <section id="features">
   <h2 data-l="th">ฟังก์ชันทั้งหมด</h2><h2 data-l="en">Everything it does</h2>
-  <p class="sec-sub" data-l="th">ป้าย <span class="tag">PRO</span> = มีในรุ่น PRO · ที่เหลือใช้ได้ในรุ่นฟรี · แตะรูปเพื่อดูใหญ่</p>
-  <p class="sec-sub" data-l="en"><span class="tag">PRO</span> = PRO edition · everything else is in the free edition · tap a picture to enlarge</p>
+  <p class="sec-sub" data-l="th">ป้าย <span class="tag">PRO</span> = มีในรุ่น PRO · ที่เหลือใช้ได้ในรุ่นฟรี · ฟังก์ชันของ Toyota Hybrid ดู<a href="#toyota">หัวข้อแยกด้านล่าง</a> · แตะรูปเพื่อดูใหญ่</p>
+  <p class="sec-sub" data-l="en"><span class="tag">PRO</span> = PRO edition · everything else is in the free edition · the Toyota Hybrid pack has <a href="#toyota">its own section below</a> · tap a picture to enlarge</p>
 
   <div class="feat">
     <div><img class="screen" data-shot="main" alt="" loading="lazy">
-      <div class="thumbs"><img data-shot="quad" alt="" loading="lazy"><img data-shot="sport" alt="" loading="lazy"><img data-shot="graph" alt="" loading="lazy"></div></div>
+      <div class="thumbs"><img data-shot="quad" alt="" loading="lazy"><img data-shot="sport" alt="" loading="lazy"><img data-shot="hudnote" alt="" loading="lazy"></div></div>
     <div>
       <h3 data-l="th">หน้าเกจ</h3><h3 data-l="en">Gauge screens</h3>
       <ul data-l="th">
@@ -202,7 +213,9 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
         <li>หน้าปัดเพิ่ม 3 แบบ: <b>LED · เรือง · สปอร์ต</b> (สปอร์ต: หน้าปัดกลางจอ ค่าอยู่ 4 มุม มีขีดค้างรอบสูงสุดแล้วค่อยๆ ลง) <span class="tag">PRO</span></li>
         <li><b>หน้า 4 เกจ</b> ตัวเลขใหญ่ เลือกค่าเองได้ทุกช่อง <span class="tag">PRO</span></li>
         <li><b>กราฟย้อนหลัง 60 วินาที</b> แสดงค่าต่ำสุด/สูงสุด และเส้นค่าเตือน <span class="tag">PRO</span></li>
-        <li><b>โหมด HUD</b> วางใต้กระจกหน้ารถ ภาพกลับด้านให้อ่านเงาได้ (ซ้าย‑ขวา / บน‑ล่าง / ทั้งสองแบบ) <span class="tag">PRO</span></li>
+        <li><b>โหมด HUD</b> วางใต้กระจกหน้ารถ ภาพกลับด้านบน‑ล่างให้อ่านเงาได้ · ความเร็วตัวใหญ่ แถบรอบหนาพร้อมตัวเลข น้ำ/รอบตัวใหญ่ · ก่อนเข้ามีหน้าแจ้งว่าไม่มีการเตือน แล้วเข้าเองใน 30 วินาที <span class="tag">PRO</span></li>
+        <li><b>จัดแถบเมนูล่างเอง</b> เลือกหน้าที่ใช้บ่อยมาไว้ 3 ช่อง (หน้าหลักอยู่ช่องแรกเสมอ) ที่เหลืออยู่ในหน้าตั้งค่า</li>
+        <li><b>ตั้งหน้าแรกตอนเปิดเครื่อง</b>: หลัก · 4 เกจ · กราฟ · HUD <span class="tag">PRO</span></li>
       </ul>
       <ul data-l="en">
         <li><b>Tachometer + speed</b> with the redline at your RPM alert, plus 3 value tiles with icons and level bars</li>
@@ -210,7 +223,9 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
         <li>3 extra dial styles: <b>LED · Glow · Sport</b> (Sport: centred dial with a value in each corner and a peak marker that holds, then eases down) <span class="tag">PRO</span></li>
         <li><b>Quad page</b> — 4 big gauges, each one your choice <span class="tag">PRO</span></li>
         <li><b>60-second graph</b> with min / max and the alert line <span class="tag">PRO</span></li>
-        <li><b>HUD mode</b> — lay it under the windscreen, mirrored so the reflection reads right (left‑right / up‑down / both) <span class="tag">PRO</span></li>
+        <li><b>HUD mode</b> — lay it under the windscreen, flipped top‑bottom so the reflection reads right · big speed, thick rev bar with numbers, large coolant / rpm · a "no alerts here" note first, then it enters by itself after 30 s <span class="tag">PRO</span></li>
+        <li><b>Arrange the bottom bar</b> — put the pages you use most in 3 slots (Home always first); the rest sit in Setup</li>
+        <li><b>Start page</b> after power-on: Home · Quad · Graph · HUD <span class="tag">PRO</span></li>
       </ul>
     </div>
   </div>
@@ -263,24 +278,28 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
 
   <div class="feat">
     <div><img class="screen" data-shot="night" alt="" loading="lazy">
-      <div class="thumbs"><img data-shot="display" alt="" loading="lazy"><img data-shot="lang" alt="" loading="lazy"><img data-shot="calibrate" alt="" loading="lazy"></div></div>
+      <div class="thumbs"><img data-shot="light" alt="" loading="lazy"><img data-shot="display" alt="" loading="lazy"><img data-shot="calfine" alt="" loading="lazy"></div></div>
     <div>
       <h3 data-l="th">หน้าจอและการตั้งค่า</h3><h3 data-l="en">Display &amp; settings</h3>
       <ul data-l="th">
-        <li><b>หรี่จออัตโนมัติ</b>ตามแสงรอบตัว (เซนเซอร์แสงบนบอร์ด) ตั้งความสว่างกลางวัน/กลางคืนแยกกัน</li>
+        <li><b>หรี่จออัตโนมัติ</b>ตามแสงรอบตัว (เซนเซอร์แสงบนบอร์ด) ตั้งความสว่างกลางวัน/กลางคืนแยกกัน · ปิดไว้ตอนเริ่มใช้ เปิดได้ในตั้งค่า</li>
+        <li><b>เทียบเซนเซอร์แสง</b>: กลางวันกด "สว่าง" · เอานิ้วปิดเซนเซอร์แล้วกด "มืด" จอจะหรี่และเข้าโหมดกลางคืนตรงกับบอร์ดของคุณ</li>
         <li><b>โทนกลางคืน</b> สีอุ่นไม่แสบตา: อัตโนมัติ / ปิด / เปิดตลอด</li>
         <li><b>ภาษาไทย / English</b> เลือกได้ตอนเปิดเครื่องครั้งแรก และเปลี่ยนได้ในตั้งค่า</li>
         <li>หน่วย °C/°F · km/h/mph · หมุนจอ 180°</li>
         <li><b>รองรับจอ CYD หลายรุ่น</b>: ตรวจชิปจออัตโนมัติ (ILI9341 / ST7789) มีปุ่มกลับสี / สลับแดง‑น้ำเงิน</li>
-        <li><b>ปรับทัช</b> 4 จุด · เสียบไฟแล้วกดปุ่ม BOOT = ปรับทัช / กดค้าง = ทดสอบสีจอ</li>
+        <li><b>ปรับทัช</b>: ครั้งแรก 5 จุด (แตะค้างที่เป้า มีเช็คจุดกลาง) · ทัชยังไม่ตรง ไปที่ ตั้งค่า → เกี่ยวกับ → ปรับทัช แบบละเอียด 9 จุด พร้อมทดสอบเทียบก่อน/หลัง</li>
+        <li>เสียบไฟแล้วกดปุ่ม BOOT = ปรับทัช / กดค้าง = ทดสอบสีจอ</li>
       </ul>
       <ul data-l="en">
-        <li><b>Auto dim</b> from the on-board light sensor, separate day and night brightness</li>
+        <li><b>Auto dim</b> from the on-board light sensor, separate day and night brightness · off at first start, switch it on in Setup</li>
+        <li><b>Light-sensor calibration</b>: tap "Light" in daylight, cover the sensor and tap "Dark" — dimming and night mode then match your board</li>
         <li><b>Night tone</b> — warm colours that are easy on the eyes: auto / off / always</li>
         <li><b>Thai / English</b> — chosen at first start, changeable in Setup</li>
         <li>°C/°F · km/h/mph · rotate 180°</li>
         <li><b>Works with CYD variants</b>: detects the display chip (ILI9341 / ST7789), with Invert and Swap R/B buttons</li>
-        <li><b>4-point touch calibration</b> · power on, then press BOOT = calibrate / hold = display colour test</li>
+        <li><b>Touch calibration</b>: 5 points at first start (hold on each target, centre check) · still off? Setup → About → Touch cal for a fine 9-point fit with a before / after test</li>
+        <li>Power on, then press BOOT = calibrate / hold = display colour test</li>
       </ul>
     </div>
   </div>
@@ -293,45 +312,125 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
       <ul data-l="th">
         <li><b>อัปเดตออนไลน์ผ่าน Wi‑Fi</b> หรือฮอตสปอตมือถือ: ตั้งค่า → เกี่ยวกับ → อัปเดต</li>
         <li>ตรวจไฟล์ด้วย <b>SHA‑256</b> ก่อนติดตั้ง · <b>ไฟดับระหว่างอัปเดตก็ไม่เสีย</b> เปิดใหม่แล้วทำต่อได้</li>
-        <li>ตัวอัปเดตอัปเดตตัวเองได้ ไม่ต้องต่อสายคอมอีกเลย</li>
+        <li>ตัวอัปเดตอัปเดตตัวเองได้ ไม่ต้องต่อสายคอมอีกเลย · แสดงความเร็ว KB/s และเวลาที่เหลือ</li>
         <li><b>อัปเกรดเป็น PRO ผ่าน Wi‑Fi</b> หลังร้านยืนยัน (รหัสผูกกับเครื่อง)</li>
       </ul>
       <ul data-l="en">
         <li><b>Online updates over Wi‑Fi</b> or a phone hotspot: Setup → About → Update</li>
         <li>Files checked with <b>SHA‑256</b> before installing · <b>a power cut mid-update is safe</b>, it picks up again at the next start</li>
-        <li>The updater updates itself — no computer cable needed again</li>
+        <li>The updater updates itself — no computer cable needed again · shows KB/s and the time left</li>
         <li><b>Upgrade to PRO over Wi‑Fi</b> once the shop confirms (licence tied to the device)</li>
       </ul>
     </div>
   </div>
 </section>
 
+<section id="toyota">
+  <h2>Toyota Hybrid <span class="tag th">TOYOTA</span></h2>
+  <p class="sec-sub" data-l="th">แพ็กเสริมสำหรับ Toyota ไฮบริด ซื้อพร้อม PRO หรือเพิ่มทีหลังสำหรับเครื่องที่มี PRO แล้ว · หน้าและการตั้งค่าในหัวข้อนี้แสดง<b>เฉพาะเครื่องที่มีแพ็ก</b> เครื่องอื่นจะไม่เห็นอะไรของ Toyota เลย · อ่านจาก ELM327 ตัวเดิม ไม่ต้องติดอุปกรณ์เพิ่ม</p>
+  <p class="sec-sub" data-l="en">An add-on for Toyota hybrids — buy it with PRO, or add it to a PRO unit later · the pages and settings below appear <b>only on units with the pack</b>; other units show nothing Toyota at all · read through the same ELM327, nothing extra to fit</p>
+
+  <div class="feat toyota">
+    <div><img class="screen" data-shot="tyre" alt="" loading="lazy">
+      <div class="thumbs"><img data-shot="tyrelow" alt="" loading="lazy"><img data-shot="warntyre" alt="" loading="lazy"><img data-shot="talerts" alt="" loading="lazy"></div></div>
+    <div>
+      <h3 data-l="th">ลมยาง 4 ล้อ + ยางอะไหล่</h3><h3 data-l="en">Tyre pressure, 4 wheels + spare</h3>
+      <ul data-l="th">
+        <li><b>ลมยาง + อุณหภูมิยาง</b> ทุกล้อ จากเซนเซอร์ในล้อของรถ (TPMS) · psi / kPa / bar</li>
+        <li><b>ยางอะไหล่</b> แสดงใต้รูปรถ (ในรถที่ส่งค่ามา)</li>
+        <li>ตั้ง<b>ลมมาตรฐาน</b>ตามป้ายข้างประตู · ล้อที่อ่อนกว่าค่าเตือนขึ้นสีส้ม/แดง</li>
+        <li><b>เตือนเต็มจอ + เสียง</b> เมื่อลมยางอ่อน บอกว่าล้อไหน ทำงานเบื้องหลังแม้อยู่หน้าอื่น</li>
+        <li>ตั้งหน้าแรกตอนเปิดเครื่องเป็นหน้าลมยาง และวางไว้ในแถบเมนูล่างได้</li>
+      </ul>
+      <ul data-l="en">
+        <li><b>Pressure + temperature</b> for every wheel from the car's in-wheel sensors (TPMS) · psi / kPa / bar</li>
+        <li><b>Spare tyre</b> under the car picture (on cars that send it)</li>
+        <li>Set the <b>recommended pressure</b> from the door sticker · wheels below the alert turn amber / red</li>
+        <li><b>Full-screen alert + sound</b> when a tyre is low, naming the wheel, checked in the background on any page</li>
+        <li>Can be the start page and sit in the bottom bar</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="feat toyota">
+    <div><img class="screen" data-shot="tyrepos" alt="" loading="lazy">
+      <div class="thumbs"><img data-shot="tyreswap" alt="" loading="lazy"><img data-shot="tyrecal" alt="" loading="lazy"><img data-shot="tyreman" alt="" loading="lazy"></div></div>
+    <div>
+      <h3 data-l="th">ตำแหน่งยาง (หลังสลับยาง)</h3><h3 data-l="en">Tyre positions (after a rotation)</h3>
+      <ul data-l="th">
+        <li>แตะปุ่ม <b>ตำแหน่งยาง</b> บนหน้าลมยาง เมื่อร้านสลับยางแล้วค่าไม่ตรงล้อ</li>
+        <li><b>สลับยางแล้ว</b>: เลือกแบบที่ร้านสลับ (หน้า‑หลัง · ไขว้ X · หลังตรงหน้าไขว้ · ซ้าย‑ขวา) ไม่ต้องวัด</li>
+        <li><b>ปรับเทียบอัตโนมัติ</b>: ปล่อยลมทีละล้อตามที่จอบอก 3 ล้อ ระบบหาว่าเซนเซอร์ไหนอยู่ล้อไหนเอง</li>
+        <li><b>เลือกเอง</b>: แตะการ์ดแต่ละล้อเพื่อเลือกช่องเซนเซอร์ ไม่ซ้ำกัน บันทึกได้เมื่อครบ 4 ล้อ</li>
+        <li>กลับค่าเริ่มต้นของรถได้ตลอด</li>
+      </ul>
+      <ul data-l="en">
+        <li>Tap <b>Tyre positions</b> on the tyre page when a rotation left the values on the wrong wheels</li>
+        <li><b>Rotated</b>: pick what the shop did (front‑rear · X cross · rear straight, front cross · left‑right) — no measuring</li>
+        <li><b>Auto calibrate</b>: let a little air out of 3 wheels, one by one as the screen says — it finds which sensor is where</li>
+        <li><b>Choose by hand</b>: tap each wheel's card to pick its sensor slot, no duplicates, save once all 4 are set</li>
+        <li>Back to the car's default any time</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="feat toyota">
+    <div><img class="screen" data-shot="hybrid" alt="" loading="lazy">
+      <div class="thumbs"><img data-shot="hybregen" alt="" loading="lazy"><img data-shot="talerts" alt="" loading="lazy"><img data-shot="warntyre" alt="" loading="lazy"></div></div>
+    <div>
+      <h3 data-l="th">แบตไฮบริด</h3><h3 data-l="en">Hybrid battery</h3>
+      <ul data-l="th">
+        <li><b>SOC ตัวใหญ่</b> · กำลัง kW (ใช้ไฟ / ชาร์จกลับ) · แรงดัน · กระแส</li>
+        <li><b>น้ำหล่อเย็นอินเวอร์เตอร์</b> และ<b>อุณหภูมิแบตไฮบริด</b> ต่ำสุด–สูงสุด (ในรถที่ส่งค่านี้ · รถที่ไม่ส่งจะแสดงรอบเครื่องยนต์แทน)</li>
+        <li><b>เตือนเต็มจอ + เสียง</b>: แบตไฮบริดร้อน · อินเวอร์เตอร์ร้อน ปรับค่าได้ในหมวด Toyota Hybrid ของค่าแจ้งเตือน (ค่าเริ่มต้นอิงรถจริง)</li>
+        <li>อ่านตรงจากกล่องควบคุมไฮบริดของ Toyota</li>
+      </ul>
+      <ul data-l="en">
+        <li><b>Big SOC</b> · power in kW (driving / charging) · voltage · current</li>
+        <li><b>Inverter coolant</b> and <b>hybrid battery temperature</b> min–max (on cars that send it · otherwise engine rpm is shown)</li>
+        <li><b>Full-screen alerts + sound</b>: hybrid battery hot · inverter hot, adjustable under Toyota Hybrid in the alert settings (defaults from real cars)</li>
+        <li>Read straight from Toyota's hybrid control unit</li>
+      </ul>
+    </div>
+  </div>
+  <p class="sec-sub" style="font-size:14px" data-l="th">ทดสอบกับ <b>Toyota Corolla Cross Hybrid</b> (ไทย) · Toyota ไฮบริดรุ่นอื่นที่ใช้ระบบเดียวกันน่าจะใช้ได้ สอบถามทาง LINE ก่อนซื้อได้</p>
+  <p class="sec-sub" style="font-size:14px" data-l="en">Tested on the <b>Toyota Corolla Cross Hybrid</b> (Thailand) · other Toyota hybrids with the same system should work — ask us on LINE first</p>
+</section>
+
 <section id="plans">
-  <h2 data-l="th">ฟรี หรือ PRO</h2><h2 data-l="en">Free or PRO</h2>
-  <p class="sec-sub" data-l="th">ซื้อ PRO ครั้งเดียว ใช้ได้ตลอด · อัปเกรดผ่าน Wi‑Fi ไม่ต้องต่อสาย</p>
-  <p class="sec-sub" data-l="en">PRO is a one-time purchase per device · upgrade over Wi‑Fi, no cable</p>
+  <h2 data-l="th">ฟรี · PRO · Toyota Hybrid</h2><h2 data-l="en">Free · PRO · Toyota Hybrid</h2>
+  <p class="sec-sub" data-l="th">จ่ายครั้งเดียว ใช้ได้ตลอดกับเครื่องนั้น · อัปเกรดผ่าน Wi‑Fi ไม่ต้องต่อสาย</p>
+  <p class="sec-sub" data-l="en">One-time purchase per device · upgrade over Wi‑Fi, no cable</p>
   <table class="plans">
-    <thead><tr><th></th><th class="c" data-l="th">ฟรี</th><th class="c" data-l="en">Free</th><th class="c">PRO</th></tr></thead>
+    <thead><tr><th></th><th class="c" data-l="th">ฟรี</th><th class="c" data-l="en">Free</th><th class="c">PRO</th><th class="c" style="color:#ff6b78">PRO +<br>Toyota</th></tr></thead>
     <tbody>
-      <tr class="grp"><td colspan="3"><span data-l="th">หน้าจอ</span><span data-l="en">Screens</span></td></tr>
-      <tr><td><span data-l="th">หน้าปัดรอบ + ความเร็ว + 3 ช่อง</span><span data-l="en">Tach + speed + 3 tiles</span></td><td class="c y">✓</td><td class="c y">✓</td></tr>
-      <tr><td><span data-l="th">หน้าปัด LED · เรือง · สปอร์ต</span><span data-l="en">LED · Glow · Sport dials</span></td><td class="c n">—</td><td class="c p">✓</td></tr>
-      <tr><td><span data-l="th">หน้า 4 เกจ</span><span data-l="en">Quad page</span></td><td class="c n">—</td><td class="c p">✓</td></tr>
-      <tr><td><span data-l="th">กราฟย้อนหลัง</span><span data-l="en">Graph</span></td><td class="c n">—</td><td class="c p">✓</td></tr>
-      <tr><td><span data-l="th">โหมด HUD</span><span data-l="en">HUD mode</span></td><td class="c n">—</td><td class="c p">✓</td></tr>
-      <tr class="grp"><td colspan="3"><span data-l="th">ข้อมูลรถ</span><span data-l="en">Car data</span></td></tr>
-      <tr><td><span data-l="th">ค่าพื้นฐาน 12 อย่าง (รวมรอบ/ความเร็ว)</span><span data-l="en">12 basic values (incl. RPM/speed)</span></td><td class="c y">✓</td><td class="c y">✓</td></tr>
-      <tr><td><span data-l="th">ค่าครบ 43 อย่าง</span><span data-l="en">All 43 values</span></td><td class="c n">—</td><td class="c p">✓</td></tr>
-      <tr><td><span data-l="th">อ่านรหัสปัญหา (DTC)</span><span data-l="en">Read trouble codes</span></td><td class="c y">✓</td><td class="c y">✓</td></tr>
-      <tr><td><span data-l="th">ล้างรหัสปัญหา</span><span data-l="en">Clear trouble codes</span></td><td class="c n">—</td><td class="c p">✓</td></tr>
-      <tr class="grp"><td colspan="3"><span data-l="th">ทั่วไป</span><span data-l="en">General</span></td></tr>
-      <tr><td><span data-l="th">เตือนค่าผิดปกติ + เสียง</span><span data-l="en">Warnings + sound</span></td><td class="c y">✓</td><td class="c y">✓</td></tr>
-      <tr><td><span data-l="th">หรี่จออัตโนมัติ · โทนกลางคืน</span><span data-l="en">Auto dim · night tone</span></td><td class="c y">✓</td><td class="c y">✓</td></tr>
-      <tr><td><span data-l="th">ไทย / English</span><span data-l="en">Thai / English</span></td><td class="c y">✓</td><td class="c y">✓</td></tr>
-      <tr><td><span data-l="th">อัปเดตออนไลน์ผ่าน Wi‑Fi</span><span data-l="en">Online updates over Wi‑Fi</span></td><td class="c y">✓</td><td class="c y">✓</td></tr>
-      <tr><td><span data-l="th">ฟังก์ชันใหม่ในอนาคต</span><span data-l="en">Future features</span></td><td class="c n">—</td><td class="c p">✓</td></tr>
+      <tr class="grp"><td colspan="4"><span data-l="th">หน้าจอ</span><span data-l="en">Screens</span></td></tr>
+      <tr><td><span data-l="th">หน้าปัดรอบ + ความเร็ว + 3 ช่อง</span><span data-l="en">Tach + speed + 3 tiles</span></td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+      <tr><td><span data-l="th">หน้าปัด LED · เรือง · สปอร์ต</span><span data-l="en">LED · Glow · Sport dials</span></td><td class="c n">—</td><td class="c p">✓</td><td class="c t">✓</td></tr>
+      <tr><td><span data-l="th">หน้า 4 เกจ</span><span data-l="en">Quad page</span></td><td class="c n">—</td><td class="c p">✓</td><td class="c t">✓</td></tr>
+      <tr><td><span data-l="th">กราฟย้อนหลัง</span><span data-l="en">Graph</span></td><td class="c n">—</td><td class="c p">✓</td><td class="c t">✓</td></tr>
+      <tr><td><span data-l="th">โหมด HUD</span><span data-l="en">HUD mode</span></td><td class="c n">—</td><td class="c p">✓</td><td class="c t">✓</td></tr>
+      <tr class="grp"><td colspan="4"><span data-l="th">ข้อมูลรถ</span><span data-l="en">Car data</span></td></tr>
+      <tr><td><span data-l="th">ค่าพื้นฐาน 12 อย่าง (รวมรอบ/ความเร็ว)</span><span data-l="en">12 basic values (incl. RPM/speed)</span></td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+      <tr><td><span data-l="th">ค่าครบ 43 อย่าง</span><span data-l="en">All 43 values</span></td><td class="c n">—</td><td class="c p">✓</td><td class="c t">✓</td></tr>
+      <tr><td><span data-l="th">อ่านรหัสปัญหา (DTC)</span><span data-l="en">Read trouble codes</span></td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+      <tr><td><span data-l="th">ล้างรหัสปัญหา</span><span data-l="en">Clear trouble codes</span></td><td class="c n">—</td><td class="c p">✓</td><td class="c t">✓</td></tr>
+      <tr class="grp"><td colspan="4"><span data-l="th">ทั่วไป</span><span data-l="en">General</span></td></tr>
+      <tr><td><span data-l="th">เตือนค่าผิดปกติ + เสียง</span><span data-l="en">Warnings + sound</span></td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+      <tr><td><span data-l="th">หรี่จออัตโนมัติ · เทียบแสง · โทนกลางคืน</span><span data-l="en">Auto dim · light calibration · night tone</span></td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+      <tr><td><span data-l="th">ไทย / English</span><span data-l="en">Thai / English</span></td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+      <tr><td><span data-l="th">อัปเดตออนไลน์ผ่าน Wi‑Fi</span><span data-l="en">Online updates over Wi‑Fi</span></td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+      <tr class="grp"><td colspan="4">Toyota Hybrid</td></tr>
+      <tr><td><span data-l="th">ลมยาง + อุณหภูมิยาง 4 ล้อ + ยางอะไหล่</span><span data-l="en">Tyre pressure + temp, 4 wheels + spare</span></td><td class="c n">—</td><td class="c n">—</td><td class="c t">✓</td></tr>
+      <tr><td><span data-l="th">ตำแหน่งยาง: สลับ · ปรับเทียบ · เลือกเอง</span><span data-l="en">Tyre positions: rotated · calibrate · by hand</span></td><td class="c n">—</td><td class="c n">—</td><td class="c t">✓</td></tr>
+      <tr><td><span data-l="th">แบตไฮบริด: SOC · kW · V · A</span><span data-l="en">Hybrid battery: SOC · kW · V · A</span></td><td class="c n">—</td><td class="c n">—</td><td class="c t">✓</td></tr>
+      <tr><td><span data-l="th">หล่อเย็นอินเวอร์เตอร์ · อุณหภูมิแบต*</span><span data-l="en">Inverter coolant · battery temp*</span></td><td class="c n">—</td><td class="c n">—</td><td class="c t">✓</td></tr>
+      <tr class="grp"><td colspan="4"><span data-l="th">ราคา</span><span data-l="en">Price</span></td></tr>
+      <tr><td><span data-l="th">จ่ายครั้งเดียว</span><span data-l="en">One-time</span></td><td class="c y"><span data-l="th">ฟรี</span><span data-l="en">free</span></td><td class="c p">฿<span class="pp-price">299</span></td><td class="c t">฿<span class="pp-bundle">459</span></td></tr>
+      <tr><td><span data-l="th">ฟังก์ชันใหม่ในอนาคต</span><span data-l="en">Future features</span></td><td class="c n">—</td><td class="c p">✓</td><td class="c t">✓</td></tr>
     </tbody>
   </table>
+  <p class="sec-sub" style="margin-top:10px;font-size:13px"><span data-l="th">* อุณหภูมิแบตแสดงเฉพาะรถที่ส่งค่านี้ รถที่ไม่ส่งจะแสดงรอบเครื่องยนต์แทน</span><span data-l="en">* Battery temperature on cars that send it; otherwise engine rpm is shown</span></p>
 </section>
 
 <section id="gallery">
@@ -346,10 +445,25 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
     <figure><img class="screen" data-shot="quad" alt="" loading="lazy"><figcaption><span data-l="th">4 เกจ</span><span data-l="en">Quad</span> · PRO</figcaption></figure>
     <figure><img class="screen" data-shot="graph" alt="" loading="lazy"><figcaption><span data-l="th">กราฟ</span><span data-l="en">Graph</span> · PRO</figcaption></figure>
     <figure><img class="screen" data-shot="hud" alt="" loading="lazy"><figcaption>HUD · PRO</figcaption></figure>
+    <figure><img class="screen" data-shot="navbar" alt="" loading="lazy"><figcaption><span data-l="th">จัดแถบล่างเอง</span><span data-l="en">Your own bottom bar</span></figcaption></figure>
     <figure><img class="screen" data-shot="night" alt="" loading="lazy"><figcaption><span data-l="th">โทนกลางคืน</span><span data-l="en">Night tone</span></figcaption></figure>
+    <figure><img class="screen" data-shot="light" alt="" loading="lazy"><figcaption><span data-l="th">เทียบเซนเซอร์แสง</span><span data-l="en">Light-sensor calibration</span></figcaption></figure>
+    <figure><img class="screen" data-shot="calfine" alt="" loading="lazy"><figcaption><span data-l="th">ปรับทัช 9 จุด</span><span data-l="en">9-point touch calibration</span></figcaption></figure>
     <figure><img class="screen" data-shot="warning" alt="" loading="lazy"><figcaption><span data-l="th">เตือนน้ำร้อน</span><span data-l="en">Coolant warning</span></figcaption></figure>
     <figure><img class="screen" data-shot="dtc" alt="" loading="lazy"><figcaption><span data-l="th">รหัสปัญหา</span><span data-l="en">Trouble codes</span></figcaption></figure>
     <figure><img class="screen" data-shot="update" alt="" loading="lazy"><figcaption><span data-l="th">อัปเดตผ่าน Wi‑Fi</span><span data-l="en">Wi‑Fi update</span></figcaption></figure>
+    <figure><img class="screen" data-shot="menu" alt="" loading="lazy"><figcaption><span data-l="th">ตั้งค่า</span><span data-l="en">Setup</span></figcaption></figure>
+  </div>
+  <h3 class="galhead">Toyota Hybrid <span class="tag th">TOYOTA</span></h3>
+  <div class="gallery">
+    <figure><img class="screen" data-shot="tyre" alt="" loading="lazy"><figcaption><span data-l="th">ลมยาง + อะไหล่</span><span data-l="en">Tyres + spare</span></figcaption></figure>
+    <figure><img class="screen" data-shot="tyrepos" alt="" loading="lazy"><figcaption><span data-l="th">เมนูตำแหน่งยาง</span><span data-l="en">Tyre positions menu</span></figcaption></figure>
+    <figure><img class="screen" data-shot="tyreswap" alt="" loading="lazy"><figcaption><span data-l="th">สลับยางแล้ว</span><span data-l="en">Rotated</span></figcaption></figure>
+    <figure><img class="screen" data-shot="tyrecal" alt="" loading="lazy"><figcaption><span data-l="th">ปรับเทียบอัตโนมัติ</span><span data-l="en">Auto calibrate</span></figcaption></figure>
+    <figure><img class="screen" data-shot="tyreman" alt="" loading="lazy"><figcaption><span data-l="th">เลือกเอง</span><span data-l="en">By hand</span></figcaption></figure>
+    <figure><img class="screen" data-shot="hybrid" alt="" loading="lazy"><figcaption><span data-l="th">แบตไฮบริด</span><span data-l="en">Hybrid battery</span></figcaption></figure>
+    <figure><img class="screen" data-shot="hybregen" alt="" loading="lazy"><figcaption><span data-l="th">ชาร์จกลับ</span><span data-l="en">Regenerating</span></figcaption></figure>
+    <figure><img class="screen" data-shot="warntyre" alt="" loading="lazy"><figcaption><span data-l="th">เตือนลมยางอ่อน</span><span data-l="en">Tyre low alert</span></figcaption></figure>
   </div>
 </section>
 
@@ -396,21 +510,26 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
 <section id="buy">
   <div class="buy">
     <div>
-      <h2 data-l="th">อัปเกรดเป็น PRO <s class="was pp-was" hidden></s> <span class="price">฿<span class="pp-price">299</span></span></h2><h2 data-l="en">Upgrade to PRO <s class="was pp-was" hidden></s> <span class="price">฿<span class="pp-price">299</span></span></h2>
+      <h2 data-l="th">ซื้อ PRO / Toyota Hybrid</h2><h2 data-l="en">Buy PRO / Toyota Hybrid</h2>
+      <div class="plantabs" role="tablist">
+        <button type="button" class="on" data-plan="pro"><b>PRO <s class="was pp-was" hidden></s> ฿<span class="pp-price">299</span></b><span data-l="th">ทุกฟังก์ชัน PRO</span><span data-l="en">all PRO features</span></button>
+        <button type="button" data-plan="bundle"><b>PRO + Toyota ฿<span class="pp-bundle">459</span></b><span data-l="th">PRO + ลมยาง + แบตไฮบริด</span><span data-l="en">PRO + tyres + hybrid</span></button>
+        <button type="button" data-plan="addon"><b>+ Toyota ฿<span class="pp-addon">199</span></b><span data-l="th">เครื่องที่มี PRO แล้ว</span><span data-l="en">for a unit with PRO</span></button>
+      </div>
       <p class="promo pp-note" hidden></p>
       <p class="sec-sub" style="margin-bottom:14px" data-l="th">จ่ายครั้งเดียว ใช้ได้ตลอดกับเครื่องนั้น</p>
       <p class="sec-sub" style="margin-bottom:14px" data-l="en">Pay once, yours for good on that device</p>
       <div class="steps" data-l="th">
         <div class="step"><div><b>เปิด ตั้งค่า → ปลดล็อก PRO บนเกจ</b><span>จะเห็นรหัสเครื่อง 12 ตัว</span></div></div>
-        <div class="step"><div><b>สแกน QR พร้อมเพย์ จ่าย ฿<span class="pp-price">299</span></b><span>ยอดใส่ไว้ให้แล้ว ใช้แอปธนาคารไหนก็ได้</span></div></div>
+        <div class="step"><div><b>สแกน QR พร้อมเพย์ จ่าย ฿<span class="pp-pay">299</span></b><span>ยอดใส่ไว้ให้แล้วตามแบบที่เลือก ใช้แอปธนาคารไหนก็ได้</span></div></div>
         <div class="step"><div><b>ส่งสลิป + รหัสเครื่อง ทาง LINE <a href="https://line.me/R/ti/p/@675hflqu">@675hflqu</a></b><span>ร้านยืนยันให้ภายในวัน</span></div></div>
-        <div class="step"><div><b>ตั้งค่า → เกี่ยวกับ → อัปเดต</b><span>ต่อ Wi‑Fi กด "ติดตั้งรุ่น PRO" รอ 2 นาที เสร็จ</span></div></div>
+        <div class="step"><div><b>ตั้งค่า → เกี่ยวกับ → อัปเดต</b><span>ต่อ Wi‑Fi กด "ติดตั้งรุ่น PRO" รอ 2 นาที เสร็จ (Toyota Hybrid: กดตรวจสอบอัปเดตก็เปิดให้เอง)</span></div></div>
       </div>
       <div class="steps" data-l="en">
         <div class="step"><div><b>On the gauge: Setup → Unlock PRO</b><span>it shows the 12-character device ID</span></div></div>
-        <div class="step"><div><b>Scan the PromptPay QR, pay ฿<span class="pp-price">299</span></b><span>amount already filled in · any Thai banking app</span></div></div>
+        <div class="step"><div><b>Scan the PromptPay QR, pay ฿<span class="pp-pay">299</span></b><span>amount for the plan you picked is filled in · any Thai banking app</span></div></div>
         <div class="step"><div><b>Send the slip + device ID on LINE <a href="https://line.me/R/ti/p/@675hflqu">@675hflqu</a></b><span>confirmed the same day</span></div></div>
-        <div class="step"><div><b>Setup → About → Update</b><span>join Wi‑Fi, tap "Install PRO", about 2 minutes</span></div></div>
+        <div class="step"><div><b>Setup → About → Update</b><span>join Wi‑Fi, tap "Install PRO", about 2 minutes (Toyota Hybrid: "Check for updates" switches it on)</span></div></div>
       </div>
       <div class="btns" style="margin-top:16px"><a class="btn amber" href="https://line.me/R/ti/p/@675hflqu"><span data-l="th">แอด LINE ร้าน</span><span data-l="en">Add us on LINE</span></a></div>
     </div>
@@ -420,7 +539,7 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
         <button type="button" data-q="line"><span data-l="th">② ส่งสลิป</span><span data-l="en">② Send slip</span></button>
       </div>
       <figure data-qp="pay"><div id="ppqr"><img src="img/promptpay-pro.png" alt="PromptPay QR" width="170" height="170"></div>
-        <figcaption><span data-l="th">พร้อมเพย์ · ยอด ฿<span class="pp-price">299</span></span><span data-l="en">PromptPay · ฿<span class="pp-price">299</span></span></figcaption>
+        <figcaption><span data-l="th">พร้อมเพย์ · ยอด ฿<span class="pp-pay">299</span></span><span data-l="en">PromptPay · ฿<span class="pp-pay">299</span></span></figcaption>
         <button type="button" class="qsave" id="ppsave"><span data-l="th">⬇ บันทึกรูป QR</span><span data-l="en">⬇ Save QR image</span></button></figure>
       <figure data-qp="line" hidden><img src="img/line-qr.png" alt="LINE @675hflqu" width="170" height="170">
         <figcaption><span data-l="th">LINE @675hflqu · ส่งสลิป + รหัสเครื่อง</span><span data-l="en">LINE @675hflqu · slip + device ID</span></figcaption></figure>
@@ -445,8 +564,14 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
     <p data-l="th">รหัส PRO ผูกกับชิปของบอร์ดนั้น ถ้าบอร์ดเสียหรือเปลี่ยนบอร์ด ติดต่อร้านทาง LINE</p>
     <p data-l="en">The PRO licence is tied to that board's chip. If the board fails or you replace it, contact the shop on LINE.</p></details>
   <details><summary><span data-l="th">ทัชเพี้ยน / สีจอเพี้ยน ทำยังไง?</span><span data-l="en">Touch or colours look wrong?</span></summary>
-    <p data-l="th">เสียบไฟก่อน แล้วภายใน 1.5 วินาที (ตอนที่มีข้อความเล็กๆ ขึ้นล่างจอ) กดปุ่ม BOOT = ปรับทัช · กดค้าง = ขึ้นแถบสีทดสอบ ปล่อยปุ่มตอนสีถูก</p>
-    <p data-l="en">Power on first, then within 1.5 s (while the small hint shows at the bottom) press BOOT = touch calibration · hold it = colour test card, release when the colours look right.</p></details>
+    <p data-l="th">ทัชไม่ตรง: ตั้งค่า → เกี่ยวกับ → ปรับทัช (แบบละเอียด 9 จุด) · ถ้ากดเมนูไม่ได้เลย เสียบไฟแล้วภายใน 1.5 วินาที (ตอนที่มีข้อความเล็กๆ ขึ้นล่างจอ) กดปุ่ม BOOT = ปรับทัช · กดค้าง = ขึ้นแถบสีทดสอบ ปล่อยปุ่มตอนสีถูก</p>
+    <p data-l="en">Touch off: Setup → About → Touch cal (fine, 9 points) · if you can't reach the menu, power on and within 1.5 s (while the small hint shows at the bottom) press BOOT = touch calibration · hold it = colour test card, release when the colours look right.</p></details>
+  <details><summary><span data-l="th">จอไม่หรี่ตอนกลางคืน / หรี่เร็วไป?</span><span data-l="en">Screen doesn't dim at night / dims too early?</span></summary>
+    <p data-l="th">เซนเซอร์แสงแต่ละบอร์ดอ่านค่าไม่เท่ากัน ไปที่ ตั้งค่า → หน้าจอและหน่วย → แสงหน้าจอ กด "สว่าง" ตอนกลางวัน แล้วเอานิ้วปิดเซนเซอร์ข้างจอกด "มืด" จากนั้นเปิด "หรี่จออัตโนมัติ"</p>
+    <p data-l="en">Light sensors differ between boards. Go to Setup → Display &amp; units → Lighting, tap "Light" in daylight, cover the sensor next to the screen and tap "Dark", then switch "Auto dim" on.</p></details>
+  <details><summary><span data-l="th">แพ็ก Toyota Hybrid ใช้กับรถรุ่นไหน?</span><span data-l="en">Which cars does the Toyota Hybrid pack work with?</span></summary>
+    <p data-l="th">ทดสอบกับ Toyota Corolla Cross Hybrid (ไทย) · Toyota ไฮบริดรุ่นอื่นที่ใช้ระบบเดียวกันน่าจะใช้ได้ ส่งรุ่น/ปีรถมาถามทาง LINE ก่อนซื้อได้ · เครื่องที่ไม่มีแพ็กจะไม่เห็นหน้าหรือการตั้งค่าของ Toyota</p>
+    <p data-l="en">Tested on the Toyota Corolla Cross Hybrid (Thailand) · other Toyota hybrids with the same system should work — send us the model / year on LINE first · units without the pack show no Toyota pages or settings.</p></details>
 </section>
 
 <footer>DESIGN BY WATCHAR</footer>
@@ -500,27 +625,44 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
   document.getElementById("tipB").addEventListener("click", function () { tipSet(true); });
   document.getElementById("tipX").addEventListener("click", function () { tipSet(false); });
 
-  // PRO price + PromptPay QR with that amount, set in the shop's admin page (promotions)
+  // prices + PromptPay QR for the chosen plan (PRO / PRO + Toyota Hybrid / Toyota add-on), set in the admin page
+  var plan = "pro", prices = null;
+  function fmt(n) { return Number(n).toLocaleString("en-US"); }
+  function planAmount() { if (!prices) return plan === "bundle" ? 459 : plan === "addon" ? 199 : 299; return plan === "bundle" ? prices.bundle : plan === "addon" ? prices.addon : prices.price; }
+  function planPayload() { return !prices ? "" : plan === "bundle" ? prices.bundlePayload : plan === "addon" ? prices.addonPayload : prices.payload; }
+  function drawQr() {                  // as a PNG image, so it can be long-pressed / saved
+    var p = fmt(planAmount());
+    document.querySelectorAll(".pp-pay").forEach(function (e) { e.textContent = p; });
+    if (typeof qrcode !== "function" || !planPayload()) return;
+    var q = qrcode(0, "M"); q.addData(planPayload()); q.make();
+    var n = q.getModuleCount(), cell = 8, pad = 4 * cell, size = n * cell + pad * 2;
+    var cv = document.createElement("canvas"); cv.width = size; cv.height = size + 44;
+    var g = cv.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, cv.width, cv.height); g.fillStyle = "#000";
+    for (var r = 0; r < n; r++) for (var c = 0; c < n; c++) if (q.isDark(r, c)) g.fillRect(pad + c * cell, pad + r * cell, cell, cell);
+    g.font = "bold 26px sans-serif"; g.textAlign = "center";
+    g.fillText("PromptPay  ฿" + p, size / 2, size + 20);
+    var img = document.querySelector("#ppqr img"); img.src = cv.toDataURL("image/png"); img.alt = "PromptPay ฿" + p;
+  }
+  document.querySelectorAll(".plantabs button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      plan = b.getAttribute("data-plan");
+      document.querySelectorAll(".plantabs button").forEach(function (x) { x.classList.toggle("on", x === b); });
+      drawQr();
+    });
+  });
   fetch("https://obd-gauge.i3ackbazoka.workers.dev/v1/price").then(function (r) { return r.json(); }).then(function (d) {
     if (!d || !(d.price > 0)) return;
-    var p = Number(d.price).toLocaleString("en-US");
-    document.querySelectorAll(".pp-price").forEach(function (e) { e.textContent = p; });
+    prices = d;
+    if (!(d.bundle > 0)) d.bundle = 459;
+    if (!(d.addon > 0)) d.addon = 199;
+    document.querySelectorAll(".pp-price").forEach(function (e) { e.textContent = fmt(d.price); });
+    document.querySelectorAll(".pp-bundle").forEach(function (e) { e.textContent = fmt(d.bundle); });
+    document.querySelectorAll(".pp-addon").forEach(function (e) { e.textContent = fmt(d.addon); });
     document.querySelectorAll(".pp-was").forEach(function (e) {
-      if (d.was > d.price) { e.textContent = "฿" + Number(d.was).toLocaleString("en-US"); e.hidden = false; } });
+      if (d.was > d.price) { e.textContent = "฿" + fmt(d.was); e.hidden = false; } });
     document.querySelectorAll(".pp-note").forEach(function (e) { if (d.note) { e.textContent = d.note; e.hidden = false; } });
-    function draw() {                    // as a PNG image, so it can be long-pressed / saved
-      if (typeof qrcode !== "function" || !d.payload) return;
-      var q = qrcode(0, "M"); q.addData(d.payload); q.make();
-      var n = q.getModuleCount(), cell = 8, pad = 4 * cell, size = n * cell + pad * 2;
-      var cv = document.createElement("canvas"); cv.width = size; cv.height = size + 44;
-      var g = cv.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, cv.width, cv.height); g.fillStyle = "#000";
-      for (var r = 0; r < n; r++) for (var c = 0; c < n; c++) if (q.isDark(r, c)) g.fillRect(pad + c * cell, pad + r * cell, cell, cell);
-      g.font = "bold 26px sans-serif"; g.textAlign = "center";
-      g.fillText("PromptPay  ฿" + p, size / 2, size + 20);
-      var img = document.querySelector("#ppqr img"); img.src = cv.toDataURL("image/png"); img.alt = "PromptPay ฿" + p;
-    }
-    if (typeof qrcode === "function") draw();
-    else { var sc = document.createElement("script"); sc.src = "https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"; sc.onload = draw; document.head.appendChild(sc); }
+    if (typeof qrcode === "function") drawQr();
+    else { var sc = document.createElement("script"); sc.src = "https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"; sc.onload = drawQr; document.head.appendChild(sc); }
   }).catch(function () {});
 
   // pay / LINE QR: one at a time (two codes side by side confuse the scanner) + save button
@@ -532,7 +674,7 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
   });
   document.getElementById("ppsave").addEventListener("click", function () {
     var img = document.querySelector("#ppqr img"), a = document.createElement("a");
-    a.href = img.src; a.download = "promptpay-obdgauge-pro.png";
+    a.href = img.src; a.download = "promptpay-obdgauge-" + plan + ".png";
     document.body.appendChild(a); a.click(); a.remove();
   });
 
