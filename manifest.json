@@ -1,11 +1,11 @@
 {
- "version": "1.1.1",
+ "version": "1.1.2",
  "url": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/firmware.bin",
  "size": 1635936,
- "sha256": "44e70a48fae6da4c2b841b20996442b957f9fb1decd0d1a5301ad9a23b138d87",
- "notes": "ไอคอนไฟเช็คเอนจินบนแถบบน (แตะเพื่อดูรหัส) · ปรับทัช: จุดสุดท้ายไม่ไปกดหน้าทดสอบเอง · อัปเดตหน้าเว็บ",
+ "sha256": "e76d2fca67057899fbe0978a2ea6b32da0353478e354475078b955bcd41ad6e7",
+ "notes": "แพ็ก Toyota: แถบล่างเป็น หลัก · แบตไฮบริด · ลมยาง · HUD ให้เอง (4 เกจ · กราฟ อยู่ในตั้งค่า) · ราคาโปรแพ็ก Toyota บนเว็บ",
  "ubuild": 12,
  "uurl": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/updater.bin",
  "usize": 1296000,
- "usha256": "587f014df95c6d26b1d8eb1e72dcd323ea1ce66a109af3c95bebebb834123827"
+ "usha256": "e94667c34793726bbf8cff7f8780fd28bc1588408dbebbcf44e76026474a7881"
 }
