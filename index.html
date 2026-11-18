@@ -256,13 +256,14 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
 
   <div class="feat">
     <div><img class="screen" data-shot="warning" alt="" loading="lazy">
-      <div class="thumbs"><img data-shot="alerts" alt="" loading="lazy"><img data-shot="dtc" alt="" loading="lazy"><img data-shot="menu" alt="" loading="lazy"></div></div>
+      <div class="thumbs"><img data-shot="mil" alt="" loading="lazy"><img data-shot="dtc" alt="" loading="lazy"><img data-shot="alerts" alt="" loading="lazy"></div></div>
     <div>
       <h3 data-l="th">เตือนและรหัสปัญหา</h3><h3 data-l="en">Warnings &amp; trouble codes</h3>
       <ul data-l="th">
         <li><b>เตือนเต็มจอ + เสียง</b> เมื่อน้ำร้อนเกินหรือไฟอ่อน ปิดเองเมื่อค่ากลับมาปกติ</li>
         <li><b>รอบสูงเกิน</b>มีเสียงเตือน · ตั้งค่าเตือนเองได้ทั้ง 3 อย่าง</li>
         <li>เสียงเตือน 4 ระดับ: ปิด / เบา / กลาง / ดัง</li>
+        <li><b>ไอคอนเครื่องยนต์บนแถบบน</b> เหมือนไฟเช็คเอนจินในรถ: สีส้ม = ไฟเช็คติด · สีเทา = มีรหัสค้างแต่ไฟไม่ติด · ตัวเลข = จำนวนรหัส · แตะเพื่อดูรหัส (เช็คทุก 30 วินาที)</li>
         <li><b>อ่านรหัสปัญหา (DTC)</b> พร้อมคำอธิบาย และสถานะไฟเช็คเอนจิน</li>
         <li><b>ล้างรหัสปัญหา</b> (ดับไฟเช็คเอนจิน) แตะยืนยัน 2 ครั้ง <span class="tag">PRO</span></li>
       </ul>
@@ -270,6 +271,7 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
         <li><b>Full-screen warning + sound</b> for coolant too hot or voltage too low; closes itself when the value is back to normal</li>
         <li><b>Over-rev</b> beep · all three thresholds adjustable</li>
         <li>4 sound levels: off / low / mid / loud</li>
+        <li><b>Engine icon on the top bar</b>, like the check-engine light in the car: amber = light on · grey = codes stored, light off · number = how many codes · tap to see them (checked every 30 s)</li>
         <li><b>Read trouble codes (DTC)</b> with descriptions and the check-engine light status</li>
         <li><b>Clear trouble codes</b> (turns the check-engine light off), with a second tap to confirm <span class="tag">PRO</span></li>
       </ul>
@@ -413,7 +415,7 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
       <tr class="grp"><td colspan="4"><span data-l="th">ข้อมูลรถ</span><span data-l="en">Car data</span></td></tr>
       <tr><td><span data-l="th">ค่าพื้นฐาน 12 อย่าง (รวมรอบ/ความเร็ว)</span><span data-l="en">12 basic values (incl. RPM/speed)</span></td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td></tr>
       <tr><td><span data-l="th">ค่าครบ 43 อย่าง</span><span data-l="en">All 43 values</span></td><td class="c n">—</td><td class="c p">✓</td><td class="c t">✓</td></tr>
-      <tr><td><span data-l="th">อ่านรหัสปัญหา (DTC)</span><span data-l="en">Read trouble codes</span></td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+      <tr><td><span data-l="th">อ่านรหัสปัญหา (DTC) · ไอคอนไฟเช็คเอนจิน</span><span data-l="en">Read trouble codes · check-engine icon</span></td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td></tr>
       <tr><td><span data-l="th">ล้างรหัสปัญหา</span><span data-l="en">Clear trouble codes</span></td><td class="c n">—</td><td class="c p">✓</td><td class="c t">✓</td></tr>
       <tr class="grp"><td colspan="4"><span data-l="th">ทั่วไป</span><span data-l="en">General</span></td></tr>
       <tr><td><span data-l="th">เตือนค่าผิดปกติ + เสียง</span><span data-l="en">Warnings + sound</span></td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td></tr>
@@ -450,9 +452,9 @@ footer{padding:30px 0 40px;text-align:center;color:#4a545e;font:500 12px "Chakra
     <figure><img class="screen" data-shot="light" alt="" loading="lazy"><figcaption><span data-l="th">เทียบเซนเซอร์แสง</span><span data-l="en">Light-sensor calibration</span></figcaption></figure>
     <figure><img class="screen" data-shot="calfine" alt="" loading="lazy"><figcaption><span data-l="th">ปรับทัช 9 จุด</span><span data-l="en">9-point touch calibration</span></figcaption></figure>
     <figure><img class="screen" data-shot="warning" alt="" loading="lazy"><figcaption><span data-l="th">เตือนน้ำร้อน</span><span data-l="en">Coolant warning</span></figcaption></figure>
+    <figure><img class="screen" data-shot="mil" alt="" loading="lazy"><figcaption><span data-l="th">ไอคอนไฟเช็คเอนจิน</span><span data-l="en">Check-engine icon</span></figcaption></figure>
     <figure><img class="screen" data-shot="dtc" alt="" loading="lazy"><figcaption><span data-l="th">รหัสปัญหา</span><span data-l="en">Trouble codes</span></figcaption></figure>
     <figure><img class="screen" data-shot="update" alt="" loading="lazy"><figcaption><span data-l="th">อัปเดตผ่าน Wi‑Fi</span><span data-l="en">Wi‑Fi update</span></figcaption></figure>
-    <figure><img class="screen" data-shot="menu" alt="" loading="lazy"><figcaption><span data-l="th">ตั้งค่า</span><span data-l="en">Setup</span></figcaption></figure>
   </div>
   <h3 class="galhead">Toyota Hybrid <span class="tag th">TOYOTA</span></h3>
   <div class="gallery">

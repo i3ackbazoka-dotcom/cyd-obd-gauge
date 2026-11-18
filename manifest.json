@@ -1,11 +1,11 @@
 {
- "version": "1.1.0",
+ "version": "1.1.1",
  "url": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/firmware.bin",
- "size": 1634784,
- "sha256": "c61c908bd4ec8e087ec3f358960e78c21bbe34e08317faae761a770557091dba",
- "notes": "ปรับทัชละเอียด 9 จุด · เทียบเซนเซอร์แสง · HUD เข้าเองใน 30 วิ · ความเร็วไม่ค้างตอนจอด · อัปเดตเร็วขึ้น · แก้ค้างตอนเปลี่ยนภาษา",
+ "size": 1635936,
+ "sha256": "44e70a48fae6da4c2b841b20996442b957f9fb1decd0d1a5301ad9a23b138d87",
+ "notes": "ไอคอนไฟเช็คเอนจินบนแถบบน (แตะเพื่อดูรหัส) · ปรับทัช: จุดสุดท้ายไม่ไปกดหน้าทดสอบเอง · อัปเดตหน้าเว็บ",
  "ubuild": 12,
  "uurl": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/updater.bin",
  "usize": 1296000,
- "usha256": "3a1c59cdb7b765ec0fc2b78c8f125ed31595e848d939c11460591aa6f34456fe"
+ "usha256": "587f014df95c6d26b1d8eb1e72dcd323ea1ce66a109af3c95bebebb834123827"
 }
