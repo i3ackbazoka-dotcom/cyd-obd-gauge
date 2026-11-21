@@ -1,9 +1,9 @@
 {
- "version": "1.1.4",
+ "version": "1.1.5",
  "url": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/firmware.bin",
- "size": 1641616,
- "sha256": "3ae357536a548d48bd3ea8638b7db722c84497121e7fc3b02377a2227013145f",
- "notes": "จอ ST7789 สีและทิศภาพถูกต้อง เลือกชิปจออัตโนมัติ · ตรวจสีจอตอนเริ่มใช้ · เลือกชิปจอในตั้งค่า",
+ "size": 1641984,
+ "sha256": "ae3bacc853071d9e2fd328c40fc1b8348f7b40204f56a63851dde603e3e9f694",
+ "notes": "อุณหภูมิน้ำจาก PID 67 (Honda เทอร์โบ) · จอ ST7789 สีและทิศภาพถูกต้อง · ตรวจสีจอ · เลือกชิปจอในตั้งค่า",
  "ubuild": 13,
  "uurl": "https://i3ackbazoka-dotcom.github.io/cyd-obd-gauge/updater.bin",
  "usize": 1296816,
